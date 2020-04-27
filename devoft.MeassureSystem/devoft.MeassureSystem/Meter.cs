@@ -20,6 +20,8 @@ namespace devoft.MeassureSystem
         
         public decimal cm
             => Value * 100;
+       
+
 
         public static Meter operator + (Meter m1, Meter m2)
             => new Meter(m1.Value + m2.Value);
