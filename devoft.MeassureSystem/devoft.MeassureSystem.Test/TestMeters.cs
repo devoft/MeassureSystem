@@ -15,6 +15,19 @@ namespace devoft.MeassureSystem.Test
         }
 
         [TestMethod]
+        public void Conversion()
+        {
+            Assert.AreEqual(5000m, new Meter(5).mm);
+            Assert.AreEqual(500m, new Meter(5).cm);
+            Assert.AreEqual(50m, new Meter(5).dm);
+            Assert.AreEqual(5m, new Meter(5).m);
+            Assert.AreEqual(0.002m, new Meter(2).km);
+            Assert.AreEqual(1.093613m, new Meter(1).yd);
+            Assert.AreEqual(39.37008m, new Meter(1).inch);
+            Assert.AreEqual(3.28084m, new Meter(1).feet);
+        }
+
+        [TestMethod]
         public void TestCentimeter()
         {
             Meter m = 5.cm();
@@ -23,7 +36,6 @@ namespace devoft.MeassureSystem.Test
         [TestMethod]
         public void TestSumMeter()
         {
-            //Meter m = 2.cm() + 5.dm()           //    Aritmética de unidades de medida (+, -)
             Meter m = 2.cm() + 5.dm();
             Assert.AreEqual(0.52m, m.Value);
         }
@@ -31,7 +43,6 @@ namespace devoft.MeassureSystem.Test
         [TestMethod]
         public void TestSubtractMeter()
         {
-            //Meter m = 9.dm() - 8.cm()           //    Aritmética de unidades de medida (+, -)
             Meter m = 9.dm() - 8.cm();
             Assert.AreEqual(0.82m, m.Value);
         }
@@ -42,7 +53,6 @@ namespace devoft.MeassureSystem.Test
             Meter2 m = 5.cm() * 4.cm();
             Assert.AreEqual(0.002m,m.Value);
         }
-
 
         [TestMethod]
         public void TestMultiplierScalarMeter()
@@ -94,7 +104,6 @@ namespace devoft.MeassureSystem.Test
         [TestMethod]
         public void TestSubtractMeter2()
         {
-            //Meter m = 9.dm() - 8.cm()           //    Aritmética de unidades de medida (+, -)
             Meter2 m = 9.dm2() - 8.cm2();
             Assert.AreEqual(0.82m, m.Value);
         }
