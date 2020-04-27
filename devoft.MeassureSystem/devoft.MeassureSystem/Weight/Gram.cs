@@ -100,30 +100,12 @@ namespace devoft.MeassureSystem.Weight
 
         #region [ Unit properties ]
 
-        public decimal kg => Value * 1000;
-        public decimal dg => Value * 0.1m;
-        public decimal cg => Value * 0.01m;
-        public decimal mg => Value * 0.001m;
+        public decimal kg => Value * 0.001m;
+        public decimal dg => Value * 10m;
+        public decimal cg => Value * 100m;
+        public decimal mg => Value * 1000m;
 
         #endregion [ Unit properties ]
-
-        public Gram Kg() => ConvertTo("kg");
-        public Gram Dg() => ConvertTo("dg");
-        public Gram Cg() => ConvertTo("cg");
-        public Gram Mg() => ConvertTo("mg");
-
-        public Gram ConvertTo(string unit)
-        {
-            return new Gram(Value * unit switch
-            {
-                "g"  => 1m,
-                "kg" => 0.001m,
-                "dg" => 10m,
-                "cg" => 100m,
-                "mg" => 1000m,
-                _    => 0m
-            }, unit);
-        }
 
         public string OriginalUnit { get; }
         public decimal Value { get; }

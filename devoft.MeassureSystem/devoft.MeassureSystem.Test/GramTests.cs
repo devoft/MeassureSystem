@@ -57,6 +57,16 @@ namespace devoft.MeassureSystem.Test
         }
 
         [TestMethod]
+        public void Conversion()
+        {
+            Assert.AreEqual(0.004m, new Gram(4).kg);
+            Assert.AreEqual(40m, new Gram(4).dg);
+            Assert.AreEqual(400m, new Gram(4).cg);
+            Assert.AreEqual(4000m, new Gram(4).mg);
+        }
+
+
+        [TestMethod]
         public void TestMiscelanea()
         {
             Assert.AreEqual("4.00cg", (Gram) "4cg");
