@@ -35,23 +35,15 @@ namespace devoft.MeassureSystem.Test
         public void TestOperators()
         {
             Gram g1 = 5;
-            Assert.AreEqual(5, g1.Value);
-
-            Assert.AreEqual(5, (decimal)g1);
-
-            Assert.AreEqual(9, (500.cg() + 400.cg()).Value);
-
-            Assert.AreEqual(1, (500.cg() - 400.cg()).Value);
-
-            Assert.AreEqual(-5, (-50.dg()).Value);
-
-            Assert.AreEqual(10, (2 * 50.dg()).Value);
-
-            Assert.AreEqual(10, (50.dg() * 2).Value);
-
-            Assert.AreEqual(2, 4.dg() / 20.cg());
-
-            Assert.AreEqual(0.005m, (50.mg() / 10m).Value);
+            
+            Assert.AreEqual(5m,     g1                  );
+            Assert.AreEqual(9m,     500.cg() + 400.cg() );
+            Assert.AreEqual(1m,     500.cg() - 400.cg() );
+            Assert.AreEqual(-5m,    -50.dg()            );
+            Assert.AreEqual(10m,    2 * 50.dg()         );
+            Assert.AreEqual(10m,    50.dg() * 2         );
+            Assert.AreEqual(2m,     4.dg() / 20.cg()    );
+            Assert.AreEqual(0.005m, 50.mg() / 10m       );
 
             Assert.IsTrue(500.cg() > 5.dg());
         }
@@ -60,9 +52,9 @@ namespace devoft.MeassureSystem.Test
         public void Conversion()
         {
             Assert.AreEqual(0.004m, new Gram(4).kg);
-            Assert.AreEqual(40m, new Gram(4).dg);
-            Assert.AreEqual(400m, new Gram(4).cg);
-            Assert.AreEqual(4000m, new Gram(4).mg);
+            Assert.AreEqual(40m,    new Gram(4).dg);
+            Assert.AreEqual(400m,   new Gram(4).cg);
+            Assert.AreEqual(4000m,  new Gram(4).mg);
         }
 
 
