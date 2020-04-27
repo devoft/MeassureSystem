@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29318.209
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "devoft.MeassureSystem", "devoft.MeassureSystem\devoft.MeassureSystem.csproj", "{12E20332-377E-4FA0-A6E1-057546F0DFC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "devoft.MeassureSystem.Test", "devoft.MeassureSystem.Test\devoft.MeassureSystem.Test.csproj", "{F7E0BE86-D194-46B9-AC62-AEA0819FF5C1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{12E20332-377E-4FA0-A6E1-057546F0DFC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12E20332-377E-4FA0-A6E1-057546F0DFC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12E20332-377E-4FA0-A6E1-057546F0DFC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12E20332-377E-4FA0-A6E1-057546F0DFC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7E0BE86-D194-46B9-AC62-AEA0819FF5C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7E0BE86-D194-46B9-AC62-AEA0819FF5C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7E0BE86-D194-46B9-AC62-AEA0819FF5C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7E0BE86-D194-46B9-AC62-AEA0819FF5C1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {215602DD-A0DF-41D0-9ABF-5D258DD3E9EB}
+	EndGlobalSection
+EndGlobal
