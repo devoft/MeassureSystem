@@ -8,7 +8,7 @@ namespace devoft.MeassureSystem.Weight
 {
     public struct Gram
     {
-        static readonly Regex gReg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(g|kg|dg|cg|mg)$");
+        static readonly Regex gReg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(g|kg|hg|dag|dg|cg|mg|oz|lb)$");
 
         public Gram(decimal value)
         {
@@ -18,17 +18,21 @@ namespace devoft.MeassureSystem.Weight
 
         public Gram(decimal value, string unit)
         {
-            if (unit?.In("g", "kg", "dg", "cg", "mg") != true)
+            if (unit?.In("g", "kg", "hg", "dag", "dg", "cg", "mg", "oz", "lb") != true)
                 throw new ArgumentException("unit mut be a valid gram unit", nameof(unit));
             OriginalUnit = unit;
             Value = value * unit switch
             {
-                "g"  => 1m,
-                "kg" => 1000m,
-                "dg" => 0.1m,
-                "cg" => 0.01m,
-                "mg" => 0.001m,
-                _    => 0m
+                "g"   => 1m,
+                "kg"  => 1000m,
+                "hg"  => 100m,
+                "dag" => 10m,
+                "dg"  => 0.1m,
+                "cg"  => 0.01m,
+                "mg"  => 0.001m,
+                "oz"  => 28.34952m,
+                "lb"  => 453.5924m,
+                _     => 0m
             };
         }
 
@@ -87,7 +91,7 @@ namespace devoft.MeassureSystem.Weight
             => g1.Value > g2.Value;
 
         public static bool operator <(Gram g1, Gram g2)
-            => g1.Value > g2.Value;
+            => g1.Value < g2.Value;
 
         public static bool operator == (Gram g1, Gram g2)
             => g1.Value == g2.Value;
@@ -100,10 +104,15 @@ namespace devoft.MeassureSystem.Weight
 
         #region [ Unit properties ]
 
+        public decimal g => Value;
         public decimal kg => Value * 0.001m;
+        public decimal hg => Value * 0.01m;
+        public decimal dag => Value * 0.1m;
         public decimal dg => Value * 10m;
         public decimal cg => Value * 100m;
         public decimal mg => Value * 1000m;
+        public decimal oz => Value * 0.035274m;
+        public decimal lb => Value * 0.00220462m;
 
         #endregion [ Unit properties ]
 
@@ -113,23 +122,37 @@ namespace devoft.MeassureSystem.Weight
         public override string ToString() 
             => OriginalUnit switch
                {
-                   "g"  => $"{Value}g",
-                   "kg" => $"{Value * 0.001m}kg",
-                   "dg" => $"{Value * 10m}dg",
-                   "cg" => $"{Value * 100m}cg",
-                   "mg" => $"{Value * 1000m}mg",
-                   _    => null
+                   "g"   => $"{Value}g",
+                   "kg"  => $"{kg}kg",
+                   "hg"  => $"{hg}hg",
+                   "dag" => $"{dag}dag",
+                   "dg"  => $"{dg}dg",
+                   "cg"  => $"{cg}cg",
+                   "mg"  => $"{mg}mg",
+                   "oz"  => $"{oz}oz",
+                   "lb"  => $"{lb}lb",
+                   _ => null
                };
 
         public string ToString(string format)
             => OriginalUnit switch
             {
-                "g"  => $"{Value.ToString(format)}g",
-                "kg" => $"{(Value * 0.001m).ToString(format)}kg",
-                "dg" => $"{(Value * 10m).ToString(format)}dg",
-                "cg" => $"{(Value * 100m).ToString(format)}cg",
-                "mg" => $"{(Value * 1000m).ToString(format)}mg",
-                _    => null
+                "g"   => $"{Value.ToString(format)}g",
+                "kg"  => $"{kg.ToString(format)}kg",
+                "hg"  => $"{hg.ToString(format)}hg",
+                "dag" => $"{dag.ToString(format)}dag",
+                "dg"  => $"{dg.ToString(format)}dg",
+                "cg"  => $"{cg.ToString(format)}cg",
+                "mg"  => $"{mg.ToString(format)}mg",
+                "oz"  => $"{oz.ToString(format)}oz",
+                "lb"  => $"{lb.ToString(format)}lb",
+                _ => null
             };
+
+        public override bool Equals(object obj) 
+            => Value == ((Gram)obj).Value;
+
+        public override int GetHashCode()
+            => Value.GetHashCode();
     }
 }

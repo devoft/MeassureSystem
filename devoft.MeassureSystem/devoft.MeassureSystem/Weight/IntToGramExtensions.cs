@@ -10,5 +10,11 @@
             => new Gram(value * 0.01m);
         public static Gram mg(this int value)
             => new Gram(value * 0.001m);
+        public static Gram g(this int value)
+            => new Gram(value);
+        public static Gram oz(this int value)
+            => new Gram(value * 28.34952m);
+        public static Gram lb(this int value)
+            => new Gram(value * 453.5924m);
     }
 }

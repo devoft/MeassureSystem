@@ -14,8 +14,11 @@ namespace devoft.MeassureSystem.Test
         {
             Assert.AreEqual(35000, Gram.Parse("35kg").Value);
 
-            Gram g2 = (Gram) "3cg";
-            Assert.AreEqual(0.03m, g2.Value);
+            Gram g1 = (Gram) "3cg";
+            Assert.AreEqual(0.03m, g1.Value);
+
+            Gram g2 = (Gram)"3oz";
+            Assert.AreEqual(85.04856m, g2.Value);
 
             Assert.ThrowsException<FormatException>(() => { Gram g2 = (Gram) "3cm"; });
         }
@@ -52,9 +55,12 @@ namespace devoft.MeassureSystem.Test
         public void Conversion()
         {
             Assert.AreEqual(0.004m, new Gram(4).kg);
+            Assert.AreEqual(0.04m, new Gram(4).hg);
+            Assert.AreEqual(0.4m, new Gram(4).dag);
             Assert.AreEqual(40m,    new Gram(4).dg);
             Assert.AreEqual(400m,   new Gram(4).cg);
             Assert.AreEqual(4000m,  new Gram(4).mg);
+
         }
 
 
@@ -62,7 +68,8 @@ namespace devoft.MeassureSystem.Test
         public void TestMiscelanea()
         {
             Assert.AreEqual("4.00cg", (Gram) "4cg");
-
+            Assert.IsTrue((1.g() - 1.g().lb.lb()) < 1.mg());
+            Assert.IsTrue((1.g() - 1.g().oz.oz()) < 1.mg());
             Assert.AreEqual(2000.5m, (50.cg() + (Gram) "2kg").Value);
         }
     }
