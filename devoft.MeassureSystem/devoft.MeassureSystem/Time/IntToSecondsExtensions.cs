@@ -2,16 +2,16 @@
 {
     public static class IntToSecondsExtensions
     {
-        public static Seconds min(this int value)
-            => new Seconds(value * 60.0);
-        public static Seconds s(this int value)
-            => new Seconds(value);
-        public static Seconds h(this int value)
-            => new Seconds(value * 3600.0);
-        public static Seconds ms(this int value)
-            => new Seconds(value / 1000.0);
-        public static Seconds days(this int value)
-            => new Seconds(value * 24.0 * 3600.0);
+        public static Milliseconds min(this int value)
+            => new Milliseconds(value * 60_000);
+        public static Milliseconds s(this int value)
+            => new Milliseconds(value * 1000);
+        public static Milliseconds h(this int value)
+            => new Milliseconds(value * 3600_000);
+        public static Milliseconds ms(this int value)
+            => new Milliseconds(value);
+        public static Milliseconds days(this int value)
+            => new Milliseconds(value * 24 * 3600_000);
 
     }
 }
