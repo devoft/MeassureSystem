@@ -1,6 +1,4 @@
 using devoft.MeassureSystem.Length;
-using devoft.MeassureSystem.Surface;
-using devoft.MeassureSystem.Volume;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace devoft.MeassureSystem.Test
@@ -27,7 +25,7 @@ namespace devoft.MeassureSystem.Test
             m1 = (Meter)"5yd";
             Assert.AreEqual(4.572m, m1.Value);
 
-            m1 = (Meter)"5inch";
+            m1 = (Meter)"5in";
             Assert.AreEqual(0.127m, m1.Value);
 
             m1 = (Meter)"5ft";

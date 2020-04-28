@@ -9,8 +9,12 @@ namespace devoft.MeassureSystem.Length
     {
         public static Meter mm(this int number)
             => new Meter(number / 1000m);
-        public static Meter cm(this int number) 
-            => new Meter(number / 100m);
+        public static Meter cm(this int number)
+        { 
+            var num = new Meter(number,"cm");
+            return num;
+        }
+        
         public static Meter dm(this int number)
             => new Meter(number / 10m);
         public static Meter m(this int number)
@@ -30,9 +34,12 @@ namespace devoft.MeassureSystem.Length
 
 
         public static Meter2 cm2(this int number)
-            => new Meter2(number / 100m);
+        {
+         var xx = new Meter2(number,"cm2");
+            return xx;
+        }
 
         public static Meter2 dm2(this int number)
-            => new Meter2(number / 10m);
+            => new Meter2(number, "dm2");
     }
 }

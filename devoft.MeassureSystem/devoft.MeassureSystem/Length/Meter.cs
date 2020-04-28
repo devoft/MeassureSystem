@@ -9,7 +9,7 @@ namespace devoft.MeassureSystem.Length
 
     public struct Meter
     {
-        public static Regex mReg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(m|km|hm|dam|dm|cm|mm|yd|inch|ft)$");
+        public static Regex mReg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(m|km|hm|dam|dm|cm|mm|yd|in|ft)$");
 
         public decimal Value { get; }
         public string OriginalUnit { get; }
@@ -33,13 +33,13 @@ namespace devoft.MeassureSystem.Length
         /// </summary>
         public decimal m => Value ;
         /// <summary>
-        /// Hectometer
-        /// </summary>
-        public decimal hm => Value / 100;
-        /// <summary>
         /// Decameter
         /// </summary>
         public decimal dam => Value / 10;
+        /// <summary>
+        /// Hectometer
+        /// </summary>
+        public decimal hm => Value / 100;
         /// <summary>
         /// Kilometers
         /// </summary>
@@ -59,7 +59,6 @@ namespace devoft.MeassureSystem.Length
 
         #endregion Unit properties
 
-
         public Meter(decimal value)
         {
             Value = value;
@@ -68,7 +67,7 @@ namespace devoft.MeassureSystem.Length
 
         public Meter(decimal value, string unit)
         {
-            if (unit?.In("m", "km", "hm", "dam", "dm", "cm", "mm", "yd", "inch","ft") != true)
+            if (unit?.In("m", "km", "hm", "dam", "dm", "cm", "mm", "yd", "in","ft") != true)
                 throw new ArgumentException($"unit mut be a valid meter unit");
             OriginalUnit = unit;
             Value = value * unit switch
@@ -81,7 +80,7 @@ namespace devoft.MeassureSystem.Length
                                 "cm"    => 0.01m,
                                 "mm"    => 0.001m,
                                 "yd"    => 0.9144m,//1.093613m,
-                                "inch"  => 0.0254m, //39.37008m,
+                                "in"  => 0.0254m, //39.37008m,
                                 "ft"    => 0.3048m,//3.28084m,
                                 _       => 0m
                             };
@@ -107,14 +106,15 @@ namespace devoft.MeassureSystem.Length
         }
 
     #region Operators
-
-    public static implicit operator Meter(decimal d)
+        
+        public static implicit operator Meter(decimal d)
             => new Meter(d);
+        
         public static explicit operator decimal (Meter m)
             => m.Value;
 
         public static explicit operator Meter(string s) 
-            => Meter.Parse(s);
+            => Parse(s);
 
 
         public static Meter Parse(string s)
@@ -134,18 +134,15 @@ namespace devoft.MeassureSystem.Length
                 return true;
             }
             m = null;
+
             return false;
-            
         }
 
         public static Meter operator + (Meter m1, Meter m2)
             => new Meter(m1.Value + m2.Value);
-
-
+        
         public static Meter operator -(Meter m1, Meter m2)
             => new Meter(m1.Value - m2.Value);
-
-
 
         public static Meter operator *(Meter m, decimal d)
            => new Meter(m.Value * d);
@@ -153,20 +150,30 @@ namespace devoft.MeassureSystem.Length
            => new Meter(m.Value * d);
         public static Meter2 operator *(Meter m1, Meter m2)
            => new Meter2(m1.Value * m2.Value);
-        public static Meter3 operator *(Meter2 m1, Meter m2)
-          => new Meter3(m1.Value * m2.Value);
-        public static Meter3 operator *(Meter m1, Meter2 m2)
-          => new Meter3(m1.Value * m2.Value);
-        
-
 
         public static decimal operator /(Meter m1, Meter m2)
            => m1.Value / m2.Value;
         public static Meter operator /(Meter m, decimal d)
           => new Meter(m.Value / d);
 
+        public static bool operator == (Meter m1, Meter m2)
+          => m1.Value == m2.Value;
+
+        public static bool operator !=(Meter m1, Meter m2)
+          => m1.Value != m2.Value;
+
+        public static bool operator > (Meter m1, Meter m2)
+          => m1.Value > m2.Value;
+
+        public static bool operator < (Meter m1, Meter m2)
+          => m1.Value > m2.Value;
+
         #endregion Operators
 
+        public override bool Equals(object obj)
+            => Value == ((Meter)obj).Value;
 
+        public override int GetHashCode()
+            => Value.GetHashCode();
     }
 }
