@@ -27,7 +27,13 @@ Metre3 lt = 5.cm() * 2.m() * 7.dm()
 Gram g = 5.lb()                              
 bool b = 5.lb() > 4.5.kg()                   
 ```
-
+## Time
+```CSharp
+Seconds s = 2.h()                           // 2h
+TimeSpan tm = 3.min()                       // 00:03:00
+Seconds s = (Seconds) TimeSpan.FromHours(1) // 3600s
+TimeSpan s = 2.h() + 20.min + 90.s()        // 02:21:30
+```
 # General features
 The following applies to every meassure unit:
 ## ToString
