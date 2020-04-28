@@ -50,6 +50,10 @@ namespace devoft.MeassureSystem.Test
             Assert.AreEqual(2m,     4.dg() / 20.cg()    );
             Assert.AreEqual(0.005m, 50.mg() / 10m       );
 
+            g1 += 2.cg();
+
+            Assert.AreEqual(5.02m, g1);
+
             Assert.IsTrue(500.cg() > 5.dg());
         }
 
