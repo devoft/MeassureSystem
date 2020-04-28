@@ -4,7 +4,7 @@ using System.Text;
 
 namespace devoft.MeassureSystem.Test
 {
-    class VolumeTest
+    class SurfaceTests
     {
     }
 }

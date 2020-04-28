@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace devoft.MeassureSystem.Test
 {
     [TestClass]
-    public class TestMeters
+    public class MetersTests
     {
         #region  Meter
 
