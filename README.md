@@ -28,7 +28,7 @@ Gram g = 5.lb()
 bool b = 5.lb() > 4.5.kg()                   
 ```
 
-#General features
+# General features
 The following applies to every meassure unit:
 ## ToString
 ```CSharp
