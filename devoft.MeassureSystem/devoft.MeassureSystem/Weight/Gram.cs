@@ -122,15 +122,15 @@ namespace devoft.MeassureSystem.Weight
         public override string ToString() 
             => OriginalUnit switch
                {
-                   "g"   => $"{Value}g",
-                   "kg"  => $"{kg}kg",
-                   "hg"  => $"{hg}hg",
-                   "dag" => $"{dag}dag",
-                   "dg"  => $"{dg}dg",
-                   "cg"  => $"{cg}cg",
-                   "mg"  => $"{mg}mg",
-                   "oz"  => $"{oz}oz",
-                   "lb"  => $"{lb}lb",
+                   "g"   => $"{Value:0.####################}g",
+                   "kg"  => $"{kg:0.####################}kg",
+                   "hg"  => $"{hg:0.####################}hg",
+                   "dag" => $"{dag:0.####################}dag",
+                   "dg"  => $"{dg:0.####################}dg",
+                   "cg"  => $"{cg:0.####################}cg",
+                   "mg"  => $"{mg:0.####################}mg",
+                   "oz"  => $"{oz:0.####################}oz",
+                   "lb"  => $"{lb:0.####################}lb",
                    _ => null
                };
 

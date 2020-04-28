@@ -1,4 +1,4 @@
-﻿namespace devoft.MeassureSystem
+﻿namespace devoft.MeassureSystem.Length
 {
     public static class DecimalExtension
     {

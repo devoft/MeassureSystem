@@ -1,3 +1,6 @@
+using devoft.MeassureSystem.Length;
+using devoft.MeassureSystem.Surface;
+using devoft.MeassureSystem.Volume;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace devoft.MeassureSystem.Test
@@ -15,6 +18,31 @@ namespace devoft.MeassureSystem.Test
         }
 
         [TestMethod]
+        public void TestParsing()
+        {
+            Assert.AreEqual(5000, Meter.Parse("5km").Value);
+
+            Meter m1 = (Meter) "10cm";
+            Assert.AreEqual(0.1m, m1.Value);
+
+            m1 = (Meter)"5yd";
+            Assert.AreEqual(4.572m, m1.Value);
+
+            m1 = (Meter)"5inch";
+            Assert.AreEqual(0.127m, m1.Value);
+
+            m1 = (Meter)"5ft";
+            Assert.AreEqual(1.524m, m1.Value);
+        }
+
+        [TestMethod]
+        public void TestToString()
+        {
+            Meter m = new Meter(5, "km");
+            Assert.AreEqual("5km", m.ToString());
+        }
+
+        [TestMethod]
         public void Conversion()
         {
             Assert.AreEqual(5000m, new Meter(5).mm);
@@ -24,28 +52,22 @@ namespace devoft.MeassureSystem.Test
             Assert.AreEqual(0.002m, new Meter(2).km);
             Assert.AreEqual(1.093613m, new Meter(1).yd);
             Assert.AreEqual(39.37008m, new Meter(1).inch);
-            Assert.AreEqual(3.28084m, new Meter(1).feet);
+            Assert.AreEqual(3.28084m, new Meter(1).ft);
         }
 
         [TestMethod]
-        public void TestCentimeter()
+        public void TestOperators()
         {
-            Meter m = 5.cm();
+            Meter m = 8;
+            Assert.AreEqual(8m , m);
+
+            m = 5.cm();
             Assert.AreEqual(0.05m, m.Value);
-        }
-        [TestMethod]
-        public void TestSumMeter()
-        {
-            Meter m = 2.cm() + 5.dm();
-            Assert.AreEqual(0.52m, m.Value);
+            
+            Assert.AreEqual(0.52m, 2.cm() + 5.dm());
+            Assert.AreEqual(0.82m, 9.dm() - 8.cm());
         }
 
-        [TestMethod]
-        public void TestSubtractMeter()
-        {
-            Meter m = 9.dm() - 8.cm();
-            Assert.AreEqual(0.82m, m.Value);
-        }
 
         [TestMethod]
         public void TestMultiplierMeter()

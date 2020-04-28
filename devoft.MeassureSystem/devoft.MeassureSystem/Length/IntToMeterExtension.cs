@@ -1,8 +1,9 @@
-﻿using System;
+﻿using devoft.MeassureSystem.Surface;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace devoft.MeassureSystem
+namespace devoft.MeassureSystem.Length
 {
     public static class IntToMeterExtension
     {
@@ -24,7 +25,7 @@ namespace devoft.MeassureSystem
             => new Meter(number / 1.093613m);
         public static Meter inch(this int number)
             => new Meter(number / 39.37008m);
-        public static Meter feet(this int number)
+        public static Meter ft(this int number)
             => new Meter(number / 3.28084m);
 
 

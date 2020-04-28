@@ -1,4 +1,4 @@
-﻿namespace devoft.MeassureSystem
+﻿namespace devoft.MeassureSystem.Surface
 {
     public struct Meter2
     {

@@ -27,11 +27,13 @@ namespace devoft.MeassureSystem.Test
         public void TestToString()
         {
             Gram g = new Gram(4, "cg");
-            Assert.AreEqual("4.00cg", g);
+            Assert.AreEqual("4cg", g);
 
-            string str = (string) g;
-            Assert.AreEqual("4.00cg", str);
-            Assert.AreEqual("4cg", g.ToString("N0"));
+            string str = g;
+            Assert.AreEqual("4cg", str);
+            Assert.AreEqual("4.00cg", g.ToString("N02"));
+
+            Assert.AreEqual("3.14159265358979g", new Gram((decimal)Math.PI));
         }
 
         [TestMethod]
