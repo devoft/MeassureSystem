@@ -73,7 +73,7 @@ namespace devoft.MeassureSystem.Test
         [TestMethod]
         public void TestMiscelanea()
         {
-            Assert.AreEqual("4.00cg", (Gram) "4cg");
+            Assert.AreEqual("4cg", (Gram) "4cg");
             Assert.IsTrue((1.g() - 1.g().lb.lb()) < 1.mg());
             Assert.IsTrue((1.g() - 1.g().oz.oz()) < 1.mg());
             Assert.AreEqual(2000.5m, (50.cg() + (Gram) "2kg").Value);
