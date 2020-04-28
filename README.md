@@ -5,6 +5,7 @@ Easy to use Meassures on C# code as it can be seen in the next sections:
   - [Length](https://github.com/devoft/MeassureSystem#length)
   - [Volume](https://github.com/devoft/MeassureSystem#volume)
   - [Weight](https://github.com/devoft/MeassureSystem#weight)
+  - [Time](https://github.com/devoft/MeassureSystem#time)
 - [General features](https://github.com/devoft/MeassureSystem#general-features)
   - [ToString](https://github.com/devoft/MeassureSystem#ToString)
   - [Parsing](https://github.com/devoft/MeassureSystem#Parse)
@@ -29,10 +30,11 @@ bool b = 5.lb() > 4.5.kg()
 ```
 ## Time
 ```CSharp
-Seconds s = 2.h()                           // 2h
-TimeSpan tm = 3.min()                       // 00:03:00
-Seconds s = (Seconds) TimeSpan.FromHours(1) // 3600s
-TimeSpan s = 2.h() + 20.min() + 90.s()        // 02:21:30
+Milliseconds s = 2.h()                                  // 2h
+TimeSpan tm = 3.min()                                   // 00:03:00
+Milliseconds s = (Milliseconds) TimeSpan.FromHours(1)   // 3600s
+TimeSpan s = 2.h() + 20.min() + 90.s()                  // 02:21:30
+var (h, min, s, m) = 200.s()                            // (0,3,20,0)
 ```
 # General features
 The following applies to every meassure unit:
