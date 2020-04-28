@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <Authors>devoft</Authors>
+    <Company>devoft</Company>
+    <Description>A set of easy to use types for units (Length, Volume, Weight, Time, etc)</Description>
+    <RepositoryUrl>https://github.com/devoft/MeassureSystem</RepositoryUrl>
+    <PackageTags>NET, Units, Meassure, Extensions</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
