@@ -105,7 +105,7 @@ namespace devoft.MeassureSystem.Length
                                   "hm"      => 0.01m,
                                   "km"      => 0.001m,
                                   "yd"      => 1.093613m,
-                                  "inch"    => 39.37008m,
+                                  "in"      => 39.37008m,
                                   "ft"      => 3.28084m,
                                   _         => 0m
                               };
@@ -113,7 +113,17 @@ namespace devoft.MeassureSystem.Length
         }
 
 
-        
+        public Meter mm() => new Meter(Value) { OriginalUnit = "mm" };
+        public Meter cm() => new Meter(Value) { OriginalUnit = "cm" };
+        public Meter dm() => new Meter(Value) { OriginalUnit = "dm" };
+        public Meter m() => new Meter(Value) { OriginalUnit = "m" };
+        public Meter dam() => new Meter(Value) { OriginalUnit = "dam" };
+        public Meter hm() => new Meter(Value) { OriginalUnit = "hm" };
+        public Meter km() => new Meter(Value) { OriginalUnit = "km" };
+        public Meter yd() => new Meter(Value) { OriginalUnit = "yd" };
+        public Meter inch() => new Meter(Value) { OriginalUnit = "in" };
+        public Meter ft() => new Meter(Value) { OriginalUnit = "ft" };
+
 
         #region Operators
 

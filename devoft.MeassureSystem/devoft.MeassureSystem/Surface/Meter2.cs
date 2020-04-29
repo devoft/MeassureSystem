@@ -11,7 +11,7 @@ namespace devoft.MeassureSystem.Surface
         public static Regex m2Reg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(mm2|cm2|dm2|m2|dam2|hm2|km2)$");
 
         public decimal Value { get; }
-        public string OriginalUnit { get; }
+        public string OriginalUnit { get; private set; }
 
         #region Unit properties
 
@@ -94,6 +94,14 @@ namespace devoft.MeassureSystem.Surface
                                  };
             return $"{v:0.####################}{OriginalUnit}";
         }
+
+        public Meter2 mm2() => new Meter2(Value) { OriginalUnit = "mm" };
+        public Meter2 cm2() => new Meter2(Value) { OriginalUnit = "cm" };
+        public Meter2 dm2() => new Meter2(Value) { OriginalUnit = "dm" };
+        public Meter2 m2() => new Meter2(Value) { OriginalUnit = "m" };
+        public Meter2 dam2() => new Meter2(Value) { OriginalUnit = "dam" };
+        public Meter2 hm2() => new Meter2(Value) { OriginalUnit = "hm" };
+        public Meter2 km2() => new Meter2(Value) { OriginalUnit = "km" };
 
         #region Operators
 

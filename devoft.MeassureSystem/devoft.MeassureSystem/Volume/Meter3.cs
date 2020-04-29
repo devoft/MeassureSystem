@@ -12,7 +12,7 @@ namespace devoft.MeassureSystem.Volume
         public static Regex m2Reg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(mm3|cm3|dm3|m3|dam3|hm3|km3)$");
 
         public decimal Value { get; }
-        public string OriginalUnit { get; }
+        public string OriginalUnit { get; private set; }
 
         #region Unit properties
 
@@ -95,6 +95,14 @@ namespace devoft.MeassureSystem.Volume
                                  };
             return $"{v:0.####################}{OriginalUnit}";
         }
+
+        public Meter3 cm3() => new Meter3(Value) { OriginalUnit = "cm" };
+        public Meter3 dm3() => new Meter3(Value) { OriginalUnit = "dm" };
+        public Meter3 mm3() => new Meter3(Value) { OriginalUnit = "mm" };
+        public Meter3 m3() => new Meter3(Value) { OriginalUnit = "m" };
+        public Meter3 dam3() => new Meter3(Value) { OriginalUnit = "dam" };
+        public Meter3 hm3() => new Meter3(Value) { OriginalUnit = "hm" };
+        public Meter3 km3() => new Meter3(Value) { OriginalUnit = "km" };
 
         #region Operators
 
