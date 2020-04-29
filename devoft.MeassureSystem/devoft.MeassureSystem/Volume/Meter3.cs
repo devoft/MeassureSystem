@@ -84,13 +84,13 @@ namespace devoft.MeassureSystem.Volume
         {
             var v = this.Value * OriginalUnit switch
                                  {
-                                     "mm3"   => 1000000m,
-                                     "cm3"   => 10000m,
-                                     "dm3"   => 100m,
+                                     "mm3"   => 1000000000m,
+                                     "cm3"   => 1000000m,
+                                     "dm3"   => 1000m,
                                      "m3"    => 1m,
-                                     "dam3"  => 0.01m,
-                                     "hm3"   => 0.0001m,
-                                     "km3"   => 0.000001m,
+                                     "dam3"  => 0.001m,
+                                     "hm3"   => 0.000001m,
+                                     "km3"   => 0.000000001m,
                                      _       => 0m
                                  };
             return $"{v:0.####################}{OriginalUnit}";

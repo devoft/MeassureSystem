@@ -26,6 +26,7 @@ namespace devoft.MeassureSystem.Length
         public static Meter ft(this decimal number)
             => new Meter(number, "ft"); // / 3.28084m);
 
+
         public static Meter2 mm2(this decimal number)
             => new Meter2(number, "mm2");
         public static Meter2 cm2(this decimal number)

@@ -49,6 +49,8 @@ namespace devoft.MeassureSystem.Test
             Assert.AreEqual(500m, new Meter(5).Cm);
             Assert.AreEqual(50m, new Meter(5).Dm);
             Assert.AreEqual(5m, new Meter(5).M);
+            Assert.AreEqual(0.8m, new Meter(8).Dam);
+            Assert.AreEqual(0.08m, new Meter(8).Hm);
             Assert.AreEqual(0.002m, new Meter(2).Km);
             Assert.AreEqual(1.093613m, new Meter(1).Yd);
             Assert.AreEqual(39.37008m, new Meter(1).Inch);
@@ -60,12 +62,20 @@ namespace devoft.MeassureSystem.Test
         {
             Meter m = 8;
             Assert.AreEqual(8m , m);
-
-            m = 5.cm();
-            Assert.AreEqual(0.05m, m.Value);
-            
+            Assert.AreEqual(0.05m, 5.cm());
+            Assert.AreEqual(0.502m, 2.mm() + 5.dm());
             Assert.AreEqual(0.52m, 2.cm() + 5.dm());
             Assert.AreEqual(0.82m, 9.dm() - 8.cm());
+            Assert.AreEqual(5.82m, 9.dm() - 8.cm() + 5.m());
+            Assert.AreEqual(50.82m, 9.dm() - 8.cm() + 5.dam());
+            Assert.AreEqual(700.46m, 5.dm() - 4.cm() + 7.hm());
+            Assert.AreEqual(5700m, 5.km() + 7.hm());
+            Assert.AreEqual(12.8016m, 6.yd() + 8.yd());
+            Assert.AreEqual(14.yd(), 6.yd() + 8.yd());
+            Assert.AreEqual(0.4318m, 9.inch() + 8.inch());
+            Assert.AreEqual(9.inch(), 5.inch() + 4.inch());
+            Assert.AreEqual(2.4384m, 5.ft() + 3.ft());
+            Assert.AreEqual(8.ft(), 5.ft() + 3.ft());
             Assert.AreEqual(0.12m, 4.cm() * 3);
             Assert.AreEqual(0.42m, 6 * 7.cm());
             Assert.AreEqual(10m, 40.cm() / 4.cm());

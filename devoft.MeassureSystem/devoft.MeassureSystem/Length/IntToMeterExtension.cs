@@ -41,6 +41,7 @@ namespace devoft.MeassureSystem.Length
         public static Meter2 km2(this int number)
             => new Meter2(number, "km2");
 
+
         public static Meter3 mm3(this int number)
             => new Meter3(number, "mm3");
         public static Meter3 cm3(this int number)
