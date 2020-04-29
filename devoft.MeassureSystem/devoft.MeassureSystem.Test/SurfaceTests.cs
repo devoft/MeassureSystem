@@ -67,22 +67,13 @@ namespace devoft.MeassureSystem.Test
             Assert.AreEqual(25000000.m2(), 1.km2() / 4.dm2());
             Assert.AreEqual(10.cm(), 40.cm2() / 4.cm());
             Assert.AreEqual(10, 40.m2() / 4);
-            Assert.AreEqual(250, 1.km3() / 4.hm3());
-            Assert.AreEqual(10m, 40.hm3() / 4.hm3());
-            Assert.AreEqual(10.m3(), 40.m3() / 4);
-            Assert.AreEqual(10m, 40.dm3() / 4.dm3());
-            Assert.AreEqual(10, 40.m2() / 4);
 
             Assert.AreEqual(0.0502m, (2m.cm2() + 5m.dm2()).Value);
             Assert.AreEqual(20.mm2(), 80m.mm2() / 4);
             Assert.AreEqual(20.hm2(), 80m.hm2() / 4);
             Assert.AreEqual(10, 40m.m2() / 4);
             Assert.AreEqual(25000000.m2(), 1m.km2() / 4m.dm2());
-            Assert.AreEqual(10m, 40m.dm3() / 4m.dm3());
-            Assert.AreEqual(10.m3(), 40m.m3() / 4);
-            Assert.AreEqual(10m, 40m.hm3() / 4m.hm3());
-            Assert.AreEqual(250, 1m.km3() / 4m.hm3());
-            Assert.AreEqual(3, 4.5m.km3() / 1.5m.km3());
+            
 
         }
     }

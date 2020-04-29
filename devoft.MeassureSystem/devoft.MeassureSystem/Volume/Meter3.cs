@@ -9,7 +9,7 @@ namespace devoft.MeassureSystem.Volume
 
     public struct Meter3
     {
-        public static Regex m2Reg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(mm3|cm3|dm3|m3|dam3|hm3|km3)$");
+        public static Regex m2Reg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(mm3|cm3|dm3|m3|dam3|hm3|km3|ml|l)$");
 
         public decimal Value { get; }
         public string OriginalUnit { get; private set; }
@@ -44,7 +44,16 @@ namespace devoft.MeassureSystem.Volume
         /// Value in cubic kilometers
         /// </summary>
         public decimal Km3 => Value / 1000000000;
+        /// <summary>
+        /// Value in Milliliter
+        /// </summary>
+        public decimal Ml => Value * 1000000;
+        /// <summary>
+        /// Value in Liter
+        /// </summary>
+        public decimal L => Value * 1000;
 
+     
         #endregion Unit properties
 
         /// <summary>
@@ -64,7 +73,7 @@ namespace devoft.MeassureSystem.Volume
         /// <param name="unit">Original unit of measure</param>
         public Meter3(decimal value, string unit)
         {
-            if (unit?.In("mm3", "cm3", "dm3", "m3", "dam3", "hm3", "km3") != true)
+            if (unit?.In("mm3", "cm3", "dm3", "m3", "dam3", "hm3", "km3", "ml", "l") != true)
                 throw new ArgumentException($"unit mut be a valid cubit meter unit");
             OriginalUnit = unit;
             Value = value * unit switch
@@ -76,6 +85,8 @@ namespace devoft.MeassureSystem.Volume
                                 "dam3"  => 1000m,
                                 "hm3"   => 1000000m,
                                 "km3"   => 1000000000m,
+                                "ml"    => 0.000001m,
+                                "l"     => 0.001m,
                                 _       => 0m
                             };
         }
@@ -91,18 +102,22 @@ namespace devoft.MeassureSystem.Volume
                                      "dam3"  => 0.001m,
                                      "hm3"   => 0.000001m,
                                      "km3"   => 0.000000001m,
+                                     "ml"    => 1000000m,
+                                     "l"     => 1000m,
                                      _       => 0m
                                  };
             return $"{v:0.####################}{OriginalUnit}";
         }
 
-        public Meter3 cm3() => new Meter3(Value) { OriginalUnit = "cm" };
-        public Meter3 dm3() => new Meter3(Value) { OriginalUnit = "dm" };
-        public Meter3 mm3() => new Meter3(Value) { OriginalUnit = "mm" };
-        public Meter3 m3() => new Meter3(Value) { OriginalUnit = "m" };
-        public Meter3 dam3() => new Meter3(Value) { OriginalUnit = "dam" };
-        public Meter3 hm3() => new Meter3(Value) { OriginalUnit = "hm" };
-        public Meter3 km3() => new Meter3(Value) { OriginalUnit = "km" };
+        public Meter3 cm3()  => new Meter3(Value) { OriginalUnit = "cm3" };
+        public Meter3 dm3()  => new Meter3(Value) { OriginalUnit = "dm3" };
+        public Meter3 mm3()  => new Meter3(Value) { OriginalUnit = "mm3" };
+        public Meter3 m3()   => new Meter3(Value) { OriginalUnit = "m3" };
+        public Meter3 dam3() => new Meter3(Value) { OriginalUnit = "dam3" };
+        public Meter3 hm3()  => new Meter3(Value) { OriginalUnit = "hm3" };
+        public Meter3 km3()  => new Meter3(Value) { OriginalUnit = "km3" };
+        public Meter3 ml()   => new Meter3(Value) { OriginalUnit = "ml" };
+        public Meter3 l()    => new Meter3(Value) { OriginalUnit = "l" };
 
         #region Operators
 
