@@ -45,14 +45,14 @@ namespace devoft.MeassureSystem.Test
         [TestMethod]
         public void Conversion()
         {
-            Assert.AreEqual(5000m, new Meter(5).mm);
-            Assert.AreEqual(500m, new Meter(5).cm);
-            Assert.AreEqual(50m, new Meter(5).dm);
-            Assert.AreEqual(5m, new Meter(5).m);
-            Assert.AreEqual(0.002m, new Meter(2).km);
-            Assert.AreEqual(1.093613m, new Meter(1).yd);
-            Assert.AreEqual(39.37008m, new Meter(1).inch);
-            Assert.AreEqual(3.28084m, new Meter(1).ft);
+            Assert.AreEqual(5000m, new Meter(5).Mm);
+            Assert.AreEqual(500m, new Meter(5).Cm);
+            Assert.AreEqual(50m, new Meter(5).Dm);
+            Assert.AreEqual(5m, new Meter(5).M);
+            Assert.AreEqual(0.002m, new Meter(2).Km);
+            Assert.AreEqual(1.093613m, new Meter(1).Yd);
+            Assert.AreEqual(39.37008m, new Meter(1).Inch);
+            Assert.AreEqual(3.28084m, new Meter(1).Ft);
         }
 
         [TestMethod]

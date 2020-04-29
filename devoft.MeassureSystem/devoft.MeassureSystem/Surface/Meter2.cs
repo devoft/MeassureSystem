@@ -14,22 +14,53 @@ namespace devoft.MeassureSystem.Surface
         public string OriginalUnit { get; }
 
         #region Unit properties
-        public decimal mm2 => Value * 1000000;
-        public decimal cm2 => Value * 10000;
-        public decimal dm2 => Value * 100;
-        public decimal m2 => Value;
-        public decimal dam2 => Value / 100;
-        public decimal hm2 => Value / 10000;
-        public decimal km2 => Value / 1000000;
+
+        /// <summary>
+        /// Value in square milimeters
+        /// </summary>
+        public decimal Mm2 => Value * 1000000;
+        /// <summary>
+        /// Value in square centimeters
+        /// </summary>
+        public decimal Cm2 => Value * 10000;
+        /// <summary>
+        /// Value in square decimeters
+        /// </summary>
+        public decimal Dm2 => Value * 100;
+        /// <summary>
+        /// Value in square meter
+        /// </summary>
+        public decimal M2 => Value;
+        /// <summary>
+        ///  Value in square decameter
+        /// </summary>
+        public decimal Dam2 => Value / 100;
+        /// <summary>
+        /// Value in square hectometer
+        /// </summary>
+        public decimal Hm2 => Value / 10000;
+        /// <summary>
+        /// Value in square kilometers
+        /// </summary>
+        public decimal Km2 => Value / 1000000;
 
         #endregion Unit properties
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="value">Value</param>
         public Meter2(decimal value)
         {
             Value = value;
             OriginalUnit = "m2";
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="value">Value</param>
+        /// <param name="unit">Original unit of measure</param>
         public Meter2(decimal value, string unit)
         {
             if (unit?.In("mm2", "cm2", "dm2", "m2", "dam2", "hm2", "km2") != true)

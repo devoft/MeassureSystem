@@ -10,59 +10,68 @@ namespace devoft.MeassureSystem.Length
         public static Regex mReg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(mm|cm|dm|m|dam|hm|km|yd|in|ft)$");
 
         public decimal Value { get; }
-        public string OriginalUnit { get; }
+        public string OriginalUnit { get; private set; }
 
         #region Unit properties
 
         /// <summary>
         /// Value in milimeters
         /// </summary>
-        public decimal mm => Value * 1000;
+        public decimal Mm => Value * 1000;
         /// <summary>
         /// Value in centimeters
         /// </summary>
-        public decimal cm => Value * 100;
+        public decimal Cm => Value * 100;
         /// <summary>
         /// Value in decimeters
         /// </summary>
-        public decimal dm => Value * 10;
+        public decimal Dm => Value * 10;
         /// <summary>
         /// Value in meter
         /// </summary>
-        public decimal m => Value ;
+        public decimal M => Value ;
         /// <summary>
         ///  Value in decameter
         /// </summary>
-        public decimal dam => Value / 10;
+        public decimal Dam => Value / 10;
         /// <summary>
         /// Value in hectometer
         /// </summary>
-        public decimal hm => Value / 100;
+        public decimal Hm => Value / 100;
         /// <summary>
         /// Value in kilometers
         /// </summary>
-        public decimal km => Value / 1000;
+        public decimal Km => Value / 1000;
         /// <summary>
         /// Value in yards
         /// </summary>
-        public decimal yd => Value * 1.093613m;
+        public decimal Yd => Value * 1.093613m;
         /// <summary>
         /// Value in inches
         /// </summary>
-        public decimal inch => Value * 39.37008m;
+        public decimal Inch => Value * 39.37008m;
         /// <summary>
         /// Value in feet
         /// </summary>
-        public decimal ft => Value * 3.28084m;
+        public decimal Ft => Value * 3.28084m;
 
         #endregion Unit properties
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="value">Value</param>
         public Meter(decimal value)
         {
             Value = value;
             OriginalUnit = "m";
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="value">Value</param>
+        /// <param name="unit">Original unit of measure</param>
         public Meter(decimal value, string unit)
         {
             if (unit?.In("mm", "cm", "dm", "m", "dam", "hm", "km", "yd", "in","ft") != true)
@@ -103,8 +112,11 @@ namespace devoft.MeassureSystem.Length
             return $"{val:0.####################}{OriginalUnit}";
         }
 
-    #region Operators
+
         
+
+        #region Operators
+
         public static implicit operator Meter(decimal d)
             => new Meter(d);
         

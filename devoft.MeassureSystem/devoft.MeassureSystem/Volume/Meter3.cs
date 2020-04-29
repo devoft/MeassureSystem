@@ -15,22 +15,53 @@ namespace devoft.MeassureSystem.Volume
         public string OriginalUnit { get; }
 
         #region Unit properties
-        public decimal mm3 => Value * 1000000000;
-        public decimal cm3 => Value * 1000000;
-        public decimal dm3 => Value * 1000;
-        public decimal m3 => Value;
-        public decimal dam3 => Value / 1000;
-        public decimal hm3 => Value / 1000000;
-        public decimal km3 => Value / 1000000000;
+
+        /// <summary>
+        /// Value in cubic milimeters
+        /// </summary>
+        public decimal Mm3 => Value * 1000000000;
+        /// <summary>
+        /// Value in cubic centimeters
+        /// </summary>
+        public decimal Cm3 => Value * 1000000;
+        /// <summary>
+        /// Value in cubic decimeters
+        /// </summary>
+        public decimal Dm3 => Value * 1000;
+        /// <summary>
+        /// Value in cubic meter
+        /// </summary>
+        public decimal M3 => Value;
+        /// <summary>
+        ///  Value in cubic decameter
+        /// </summary>
+        public decimal Dam3 => Value / 1000;
+        /// <summary>
+        /// Value in cubic hectometer
+        /// </summary>
+        public decimal Hm3 => Value / 1000000;
+        /// <summary>
+        /// Value in cubic kilometers
+        /// </summary>
+        public decimal Km3 => Value / 1000000000;
 
         #endregion Unit properties
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="value">Value</param>
         public Meter3(decimal value)
         {
             Value = value;
             OriginalUnit = "m3";
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="value">Value</param>
+        /// <param name="unit">Original unit of measure</param>
         public Meter3(decimal value, string unit)
         {
             if (unit?.In("mm3", "cm3", "dm3", "m3", "dam3", "hm3", "km3") != true)
