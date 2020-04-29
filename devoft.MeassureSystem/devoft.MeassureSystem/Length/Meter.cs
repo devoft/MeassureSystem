@@ -1,12 +1,10 @@
 ﻿using devoft.MeassureSystem.Surface;
-using devoft.MeassureSystem.Volume;
 using devoft.System.Collections.Generic;
 using System;
 using System.Text.RegularExpressions;
 
 namespace devoft.MeassureSystem.Length
 {
-
     public struct Meter
     {
         public static Regex mReg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(m|km|hm|dam|dm|cm|mm|yd|in|ft)$");
@@ -67,20 +65,20 @@ namespace devoft.MeassureSystem.Length
 
         public Meter(decimal value, string unit)
         {
-            if (unit?.In("m", "km", "hm", "dam", "dm", "cm", "mm", "yd", "in","ft") != true)
+            if (unit?.In("mm", "cm", "dm", "m", "dam", "hm", "km", "yd", "in","ft") != true)
                 throw new ArgumentException($"unit mut be a valid meter unit");
             OriginalUnit = unit;
             Value = value * unit switch
                             {
-                                "m"     => 1m,
-                                "km"    => 1000m,
-                                "hm"    => 100m,
-                                "dam"   => 10m,
-                                "dm"    => 0.1m,
-                                "cm"    => 0.01m,
                                 "mm"    => 0.001m,
+                                "cm"    => 0.01m,
+                                "dm"    => 0.1m,
+                                "m"     => 1m,
+                                "dam"   => 10m,
+                                "hm"    => 100m,
+                                "km"    => 1000m,
                                 "yd"    => 0.9144m,//1.093613m,
-                                "in"  => 0.0254m, //39.37008m,
+                                "in"    => 0.0254m, //39.37008m,
                                 "ft"    => 0.3048m,//3.28084m,
                                 _       => 0m
                             };
@@ -123,7 +121,6 @@ namespace devoft.MeassureSystem.Length
                 return m.Value;
             else
                 throw new FormatException($"Invalid format");
-
         }
 
         public static bool TryParse(string s, out Meter? m)
@@ -134,7 +131,6 @@ namespace devoft.MeassureSystem.Length
                 return true;
             }
             m = null;
-
             return false;
         }
 
@@ -158,13 +154,10 @@ namespace devoft.MeassureSystem.Length
 
         public static bool operator == (Meter m1, Meter m2)
           => m1.Value == m2.Value;
-
         public static bool operator !=(Meter m1, Meter m2)
           => m1.Value != m2.Value;
-
         public static bool operator > (Meter m1, Meter m2)
           => m1.Value > m2.Value;
-
         public static bool operator < (Meter m1, Meter m2)
           => m1.Value > m2.Value;
 

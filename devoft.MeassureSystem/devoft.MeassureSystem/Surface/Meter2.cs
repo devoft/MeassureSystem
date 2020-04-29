@@ -8,7 +8,6 @@ namespace devoft.MeassureSystem.Surface
 {
     public struct Meter2
     {
-
         public static Regex m2Reg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(m2|km2|hm2|dam2|dm2|cm2|mm2)$");
 
         public decimal Value { get; }
@@ -33,19 +32,19 @@ namespace devoft.MeassureSystem.Surface
 
         public Meter2(decimal value, string unit)
         {
-            if (unit?.In("m2", "km2", "hm2", "dam2", "dm2", "cm2", "mm2") != true)
+            if (unit?.In("mm2", "cm2", "dm2", "m2", "dam2", "hm2", "km2") != true)
                 throw new ArgumentException($"unit mut be a valid square meter unit");
             OriginalUnit = unit;
             Value = value * unit switch
             {
-                "m2" => 1m,
-                "km2" => 1000000m,
-                "hm2" => 10000m,
-                "dam2" => 100m,
-                "dm2" => 0.01m,
-                "cm2" => 0.0001m,
-                "mm2" => 0.000001m,
-                _ => 0m
+                "mm2"   => 0.000001m,
+                "cm2"   => 0.0001m,
+                "dm2"   => 0.01m,
+                "m2"    => 1m,
+                "dam2"  => 100m,
+                "hm2"   => 10000m,
+                "km2"   => 1000000m,
+                _       => 0m
             };
         }
 
@@ -119,9 +118,25 @@ namespace devoft.MeassureSystem.Surface
         public static Meter operator /(Meter2 m2, Meter m)
           => new Meter(m2.Value / m.Value);
 
-        // TO DO   comparison operators
+        public static bool operator ==(Meter2 m1, Meter2 m2)
+          => m1.Value == m2.Value;
+
+        public static bool operator !=(Meter2 m1, Meter2 m2)
+          => m1.Value != m2.Value;
+
+        public static bool operator >(Meter2 m1, Meter2 m2)
+          => m1.Value > m2.Value;
+
+        public static bool operator <(Meter2 m1, Meter2 m2)
+          => m1.Value > m2.Value;
 
         #endregion Operators
+
+        public override bool Equals(object obj)
+            => Value == ((Meter2)obj).Value;
+
+        public override int GetHashCode()
+            => Value.GetHashCode();
 
     }
 
