@@ -8,7 +8,7 @@ namespace devoft.MeassureSystem.Surface
 {
     public struct Meter2
     {
-        public static Regex m2Reg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(m2|km2|hm2|dam2|dm2|cm2|mm2)$");
+        public static Regex m2Reg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(mm2|cm2|dm2|m2|dam2|hm2|km2)$");
 
         public decimal Value { get; }
         public string OriginalUnit { get; }
@@ -36,30 +36,30 @@ namespace devoft.MeassureSystem.Surface
                 throw new ArgumentException($"unit mut be a valid square meter unit");
             OriginalUnit = unit;
             Value = value * unit switch
-            {
-                "mm2"   => 0.000001m,
-                "cm2"   => 0.0001m,
-                "dm2"   => 0.01m,
-                "m2"    => 1m,
-                "dam2"  => 100m,
-                "hm2"   => 10000m,
-                "km2"   => 1000000m,
-                _       => 0m
-            };
+                            {
+                                "mm2"   => 0.000001m,
+                                "cm2"   => 0.0001m,
+                                "dm2"   => 0.01m,
+                                "m2"    => 1m,
+                                "dam2"  => 100m,
+                                "hm2"   => 10000m,
+                                "km2"   => 1000000m,
+                                _       => 0m
+                            };
         }
 
         public override string ToString()
         {
             var v = this.Value * OriginalUnit switch
                                  {
-                                     "km2" => 0.000001m,
-                                     "hm2" => 0.0001m,
+                                     "mm2"  => 1000000m,
+                                     "cm2"  => 10000m,
+                                     "dm2"  => 100m,
+                                     "m2"   => 1m,
                                      "dam2" => 0.01m,
-                                     "m2" => 1m,
-                                     "dm2" => 100m,
-                                     "cm2" => 10000m,
-                                     "mm2" => 1000000m,
-                                     _ => 0m
+                                     "hm2"  => 0.0001m,
+                                     "km2"  => 0.000001m,
+                                     _      => 0m
                                  };
             return $"{v:0.####################}{OriginalUnit}";
         }
@@ -97,10 +97,8 @@ namespace devoft.MeassureSystem.Surface
         public static Meter2 operator + (Meter2 m1, Meter2 m2)
            => new Meter2(m1.Value + m2.Value);
 
-
         public static Meter2 operator - (Meter2 m1, Meter2 m2)
             => new Meter2(m1.Value - m2.Value);
-
 
         public static Meter2 operator *(decimal d, Meter2 m2)
           => new Meter2(m2.Value * d);
@@ -137,8 +135,5 @@ namespace devoft.MeassureSystem.Surface
 
         public override int GetHashCode()
             => Value.GetHashCode();
-
     }
-
-
 }

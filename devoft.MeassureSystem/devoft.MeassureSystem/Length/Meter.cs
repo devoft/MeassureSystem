@@ -7,7 +7,7 @@ namespace devoft.MeassureSystem.Length
 {
     public struct Meter
     {
-        public static Regex mReg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(m|km|hm|dam|dm|cm|mm|yd|in|ft)$");
+        public static Regex mReg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(mm|cm|dm|m|dam|hm|km|yd|in|ft)$");
 
         public decimal Value { get; }
         public string OriginalUnit { get; }
@@ -15,43 +15,43 @@ namespace devoft.MeassureSystem.Length
         #region Unit properties
 
         /// <summary>
-        /// Milimeters
+        /// Value in milimeters
         /// </summary>
         public decimal mm => Value * 1000;
         /// <summary>
-        /// Centimeters
+        /// Value in centimeters
         /// </summary>
         public decimal cm => Value * 100;
         /// <summary>
-        /// Decimeters
+        /// Value in decimeters
         /// </summary>
         public decimal dm => Value * 10;
         /// <summary>
-        /// Meter
+        /// Value in meter
         /// </summary>
         public decimal m => Value ;
         /// <summary>
-        /// Decameter
+        ///  Value in decameter
         /// </summary>
         public decimal dam => Value / 10;
         /// <summary>
-        /// Hectometer
+        /// Value in hectometer
         /// </summary>
         public decimal hm => Value / 100;
         /// <summary>
-        /// Kilometers
+        /// Value in kilometers
         /// </summary>
         public decimal km => Value / 1000;
         /// <summary>
-        /// Yards
+        /// Value in yards
         /// </summary>
         public decimal yd => Value * 1.093613m;
         /// <summary>
-        /// Inches
+        /// Value in inches
         /// </summary>
         public decimal inch => Value * 39.37008m;
         /// <summary>
-        /// Feet
+        /// Value in feet
         /// </summary>
         public decimal ft => Value * 3.28084m;
 
@@ -88,17 +88,17 @@ namespace devoft.MeassureSystem.Length
         {
             var val = Value * OriginalUnit switch
                               {
-                                  "m"     => 1m,
-                                  "km"    => 0.001m,
-                                  "hm"    => 0.01m,
-                                  "dam"   => 0.1m,
-                                  "dm"    => 10m,
-                                  "cm"    => 100m,
-                                  "mm"    => 1000m,
-                                  "yd"    => 1.093613m,
-                                  "inch"  => 39.37008m,
-                                  "ft"    => 3.28084m,
-                                  _       => 0m
+                                  "mm"      => 1000m,
+                                  "cm"      => 100m,
+                                  "dm"      => 10m,
+                                  "m"       => 1m,
+                                  "dam"     => 0.1m,
+                                  "hm"      => 0.01m,
+                                  "km"      => 0.001m,
+                                  "yd"      => 1.093613m,
+                                  "inch"    => 39.37008m,
+                                  "ft"      => 3.28084m,
+                                  _         => 0m
                               };
             return $"{val:0.####################}{OriginalUnit}";
         }
