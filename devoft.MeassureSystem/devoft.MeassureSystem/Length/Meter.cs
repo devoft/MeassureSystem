@@ -7,7 +7,7 @@ namespace devoft.MeassureSystem.Length
 {
     public struct Meter
     {
-        public static Regex mReg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(mm|cm|dm|m|dam|hm|km|yd|in|ft)$");
+        public static Regex mReg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(mm|cm|dm|m|dam|hm|km|yd|in|ft|px)$");
 
         public decimal Value { get; }
         public string OriginalUnit { get; private set; }
@@ -54,6 +54,10 @@ namespace devoft.MeassureSystem.Length
         /// Value in feet
         /// </summary>
         public decimal Ft => Value * 3.28084m;
+        /// <summary>
+        /// Value in pixel
+        /// </summary>
+        public decimal Px => Value * 3779.57517575m;
 
         #endregion Unit properties
 
@@ -74,7 +78,7 @@ namespace devoft.MeassureSystem.Length
         /// <param name="unit">Original unit of measure</param>
         public Meter(decimal value, string unit)
         {
-            if (unit?.In("mm", "cm", "dm", "m", "dam", "hm", "km", "yd", "in","ft") != true)
+            if (unit?.In("mm", "cm", "dm", "m", "dam", "hm", "km", "yd", "in","ft", "px") != true)
                 throw new ArgumentException($"unit mut be a valid meter unit");
             OriginalUnit = unit;
             Value = value * unit switch
@@ -89,6 +93,7 @@ namespace devoft.MeassureSystem.Length
                                 "yd"    => 0.9144m,//1.093613m,
                                 "in"    => 0.0254m, //39.37008m,
                                 "ft"    => 0.3048m,//3.28084m,
+                                "px"    => 0.00026458m,
                                 _       => 0m
                             };
         }
@@ -107,6 +112,7 @@ namespace devoft.MeassureSystem.Length
                                   "yd"      => 1.093613m,
                                   "in"      => 39.37008m,
                                   "ft"      => 3.28084m,
+                                  "px"      => 3779.57517575m,
                                   _         => 0m
                               };
             return $"{val:0.####################}{OriginalUnit}";
@@ -123,27 +129,21 @@ namespace devoft.MeassureSystem.Length
         public Meter yd() => new Meter(Value) { OriginalUnit = "yd" };
         public Meter inch() => new Meter(Value) { OriginalUnit = "in" };
         public Meter ft() => new Meter(Value) { OriginalUnit = "ft" };
-
+        public Meter px => new Meter(Value) { OriginalUnit = "px" };
 
         #region Operators
 
-        public static implicit operator Meter(decimal d)
-            => new Meter(d);
+        public static implicit operator Meter(decimal d) => new Meter(d);
         
-        public static explicit operator decimal (Meter m)
-            => m.Value;
+        public static explicit operator decimal (Meter m) => m.Value;
 
-        public static explicit operator Meter(string s) 
-            => Parse(s);
+        public static explicit operator Meter(string s) => Parse(s);
 
 
         public static Meter Parse(string s)
-        {
-            if (TryParse(s, out var m))
-                return m.Value;
-            else
-                throw new FormatException($"Invalid format");
-        }
+            => TryParse(s, out var m) 
+                    ? m.Value
+                    : throw new FormatException($"Invalid format");
 
         public static bool TryParse(string s, out Meter? m)
         {

@@ -80,19 +80,6 @@ namespace devoft.MeassureSystem.Test
             Assert.AreEqual(0.42m, 6 * 7.cm());
             Assert.AreEqual(10m, 40.cm() / 4.cm());
             Assert.AreEqual(0.05m, 50.cm() / 10);
-            
         }
-
-        #region Litre
-        public void TestLitre()
-        {
-            //Litre lt = 5.cm() * 2.m() * 7.dm()  
-            //    Metre * Metre = Metre2 (metros cuadrados), 
-            //y Metre2 * Metre = Metre3 (metros cúbicos); Metre3 debe poderse convertir a Litre
-        }
-        #endregion 
-
     }
-
-
 }
