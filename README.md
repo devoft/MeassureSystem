@@ -27,7 +27,7 @@ Meter3 lt = 5.cm() * 2.m() * 7.dm();        //0.07m3
 ### Weight
 ```CSharp
 Gram g = 5.lb();                              
-bool b = 5.lb() > 4.5.kg();                  
+bool b = 5.lb() > 4.5m.kg();                  
 ```
 ### Time
 ```CSharp
