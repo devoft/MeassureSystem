@@ -85,7 +85,7 @@ namespace devoft.MeassureSystem.Weight
             => g1.Value / g2.Value;
 
         public static Gram operator -(Gram g)
-            => new Gram(-g.Value, g.OriginalUnit);
+            => new Gram(-g.Value) { OriginalUnit = g.OriginalUnit };
 
         public static bool operator >(Gram g1, Gram g2)
             => g1.Value > g2.Value;
@@ -116,7 +116,7 @@ namespace devoft.MeassureSystem.Weight
 
         #endregion [ Unit properties ]
 
-        public string OriginalUnit { get; }
+        public string OriginalUnit { get; private set; }
         public decimal Value { get; }
 
         public override string ToString() 

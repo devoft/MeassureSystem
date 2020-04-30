@@ -98,6 +98,22 @@ namespace devoft.MeassureSystem.Length
                             };
         }
 
+        public static Meter Parse(string s)
+            => TryParse(s, out var m)
+                    ? m.Value
+                    : throw new FormatException($"Invalid format");
+
+        public static bool TryParse(string s, out Meter? m)
+        {
+            if (mReg.Match(s)?.Groups is GroupCollection gc && gc.Count > 2)
+            {
+                m = new Meter(decimal.Parse(gc[1].Value), gc[2].Value);
+                return true;
+            }
+            m = null;
+            return false;
+        }
+
         public override string ToString()
         {
             var val = Value * OriginalUnit switch
@@ -119,6 +135,23 @@ namespace devoft.MeassureSystem.Length
         }
 
 
+        public string ToString(string format)
+          => OriginalUnit switch
+            {
+                "m" => $"{Value.ToString(format)}m",
+                "mm" => $"{Mm.ToString(format)}mm",
+                "cm" => $"{Cm.ToString(format)}cm",
+                "dm" => $"{Dm.ToString(format)}dm",
+                "dam" => $"{Dam.ToString(format)}dam",
+                "hm" => $"{Hm.ToString(format)}hm",
+                "km" => $"{Km.ToString(format)}km",
+                "yd" => $"{Yd.ToString(format)}yd",
+                "in" => $"{Inch.ToString(format)}in",
+                "ft" => $"{Ft.ToString(format)}ft",
+                "px" => $"{Px.ToString(format)}px",
+                _ => null
+            };
+        
         public Meter mm() => new Meter(Value) { OriginalUnit = "mm" };
         public Meter cm() => new Meter(Value) { OriginalUnit = "cm" };
         public Meter dm() => new Meter(Value) { OriginalUnit = "dm" };
@@ -139,22 +172,7 @@ namespace devoft.MeassureSystem.Length
 
         public static explicit operator Meter(string s) => Parse(s);
 
-
-        public static Meter Parse(string s)
-            => TryParse(s, out var m) 
-                    ? m.Value
-                    : throw new FormatException($"Invalid format");
-
-        public static bool TryParse(string s, out Meter? m)
-        {
-            if (mReg.Match(s)?.Groups is GroupCollection gc && gc.Count >2)
-            {
-                m = new Meter(decimal.Parse(gc[1].Value), gc[2].Value);
-                return true;
-            }
-            m = null;
-            return false;
-        }
+        public static implicit operator string(Meter m) => m.ToString();
 
         public static Meter operator + (Meter m1, Meter m2)
             => new Meter(m1.Value + m2.Value);
@@ -173,7 +191,8 @@ namespace devoft.MeassureSystem.Length
            => m1.Value / m2.Value;
         public static Meter operator /(Meter m, decimal d)
           => new Meter(m.Value / d);
-
+        public static Meter operator -(Meter g)
+            => new Meter(-g.Value) { OriginalUnit = g.OriginalUnit };
         public static bool operator == (Meter m1, Meter m2)
           => m1.Value == m2.Value;
         public static bool operator !=(Meter m1, Meter m2)
@@ -181,7 +200,7 @@ namespace devoft.MeassureSystem.Length
         public static bool operator > (Meter m1, Meter m2)
           => m1.Value > m2.Value;
         public static bool operator < (Meter m1, Meter m2)
-          => m1.Value > m2.Value;
+          => m1.Value < m2.Value;
 
         #endregion Operators
 
