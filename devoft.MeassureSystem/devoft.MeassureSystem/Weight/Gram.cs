@@ -1,7 +1,5 @@
 ﻿using devoft.System.Collections.Generic;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace devoft.MeassureSystem.Weight
@@ -16,6 +14,11 @@ namespace devoft.MeassureSystem.Weight
             OriginalUnit = "g";
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="value">Value</param>
+        /// <param name="unit">Original unit of measure</param>
         public Gram(decimal value, string unit)
         {
             if (unit?.In("g", "kg", "hg", "dag", "dg", "cg", "mg", "oz", "lb") != true)
@@ -104,14 +107,41 @@ namespace devoft.MeassureSystem.Weight
 
         #region [ Unit properties ]
 
+        /// <summary>
+        /// Value ​in grams
+        /// </summary>
         public decimal g => Value;
+        /// <summary>
+        /// Value ​​in kilograms
+        /// </summary>
         public decimal kg => Value * 0.001m;
+        /// <summary>
+        /// Value in hectograms
+        /// </summary>
         public decimal hg => Value * 0.01m;
+        /// <summary>
+        /// Value in decagrams
+        /// </summary>
         public decimal dag => Value * 0.1m;
+        /// <summary>
+        /// Value en decigrams
+        /// </summary>
         public decimal dg => Value * 10m;
+        /// <summary>
+        /// Value in centigrams
+        /// </summary>
         public decimal cg => Value * 100m;
+        /// <summary>
+        /// Malie in miligrams
+        /// </summary>
         public decimal mg => Value * 1000m;
+        /// <summary>
+        /// Value in ounces
+        /// </summary>
         public decimal oz => Value * 0.035274m;
+        /// <summary>
+        /// Value in pounds
+        /// </summary>
         public decimal lb => Value * 0.00220462m;
 
         #endregion [ Unit properties ]

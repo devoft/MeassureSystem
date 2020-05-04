@@ -134,7 +134,6 @@ namespace devoft.MeassureSystem.Length
             return $"{val:0.####################}{OriginalUnit}";
         }
 
-
         public string ToString(string format)
           => OriginalUnit switch
             {

@@ -45,7 +45,6 @@ namespace devoft.MeassureSystem.Test
             Assert.AreEqual("0.1m", (40.cm3() / 4.cm2()).ToString());
             Assert.AreEqual("45", (90.dam3() / 2.dam3()).ToString());
 
-
             Assert.AreEqual("45", (90m.dam2() / 2m.dam2()).ToString());
             Assert.AreEqual("10", (40m.mm3() / 4m.mm3()).ToString());
             Assert.AreEqual("0.1m", (40m.cm3() / 4m.cm2()).ToString());
