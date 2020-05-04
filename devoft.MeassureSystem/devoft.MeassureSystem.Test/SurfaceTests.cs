@@ -73,8 +73,6 @@ namespace devoft.MeassureSystem.Test
             Assert.AreEqual(20.hm2(), 80m.hm2() / 4);
             Assert.AreEqual(10, 40m.m2() / 4);
             Assert.AreEqual(25000000.m2(), 1m.km2() / 4m.dm2());
-            
-
         }
     }
 }

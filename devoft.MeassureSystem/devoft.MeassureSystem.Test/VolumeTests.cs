@@ -8,6 +8,26 @@ namespace devoft.MeassureSystem.Test
     public class VolumeTests
     {
         [TestMethod]
+        public void TestParsing()
+        {
+            Assert.AreEqual(0.07m, 5.cm() * 2.m() * 7.dm());
+        }
+
+        [TestMethod]
+        public void TestToString()
+        {
+            Assert.AreEqual("70l", (5.cm() * 2.m() * 7.dm()).l().ToString());
+        }
+
+        [TestMethod]
+        public void Conversion()
+        {
+            Assert.AreEqual(10m, new Meter3(10).M3);
+            Assert.AreEqual(10000000000m, new Meter3(10).Mm3);
+            Assert.AreEqual(0.00000000011m, new Meter3(0.110m).Km3);
+        }
+
+        [TestMethod]
         public void TestOperators()
         {
             Assert.AreEqual(0.000024m, (2.cm() * 3.cm() * 4.cm()).Value);
@@ -39,7 +59,5 @@ namespace devoft.MeassureSystem.Test
             Assert.AreEqual(0.000001m, 1.cm() * 1.cm() * 1.cm());
 
         }
-
-        
     }
 }

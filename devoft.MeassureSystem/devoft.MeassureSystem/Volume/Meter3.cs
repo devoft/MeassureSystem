@@ -52,7 +52,6 @@ namespace devoft.MeassureSystem.Volume
         /// Value in Liter
         /// </summary>
         public decimal L => Value * 1000;
-
      
         #endregion Unit properties
 
