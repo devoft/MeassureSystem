@@ -1,6 +1,7 @@
 ﻿using devoft.System.Collections.Generic;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -8,7 +9,8 @@ namespace devoft.MeassureSystem.Time
 {
     public struct Milliseconds
     {
-        static readonly Regex gReg = new Regex(@"([0-9]+)(?:\s)*(s|min|h|ms|d)$");
+        static readonly Regex gReg = new Regex(@"((([0-9]+)(?:\s)*d)\:?)?((([0-9]+)(?:\s)*h)\:?)?((([0-9]+)(?:\s)*min)\:?)?((([0-9]+)(?:\s)*s)\:?)?((([0-9]+)(?:\s)*ms)\:?)?$");
+        static readonly Regex partialReg = new Regex(@"([0-9]+)(?:\s)*(s|min|h|ms|d)$");
 
         public Milliseconds(int s)
         {
@@ -98,16 +100,32 @@ namespace devoft.MeassureSystem.Time
 
         #endregion [ operators ]
 
-        private static Milliseconds Parse(string time) 
+        /// <summary>
+        /// Converts the string representation of time to its Milliseconds value. 
+        /// Eg. 4d, 2h, 2min, 3s, 5ms, 5h:15min:20s
+        /// </summary>
+        /// <param name="time">string representation of type</param>
+        /// <returns>A Milisenconds value</returns>
+        public static Milliseconds Parse(string time) 
             => TryParse(time, out var value)
                   ? value.Value
                   : throw new FormatException($"Invalid time format {time}");
 
-        private static bool TryParse(string str, out Milliseconds? seconds)
+        /// <summary>
+        /// Try to convert the string representation of time to its Milliseconds value. 
+        /// Eg. 4d, 2h, 2min, 3s, 5ms, 5h:15min:20s
+        /// </summary>
+        /// <param name="time">string representation of type</param>
+        /// <param name="seconds">A Milisenconds value</param>
+        /// <returns>Whether the parsing success</returns>
+        public static bool TryParse(string str, out Milliseconds? seconds)
         {
-            if (gReg.Match(str)?.Groups is GroupCollection g && g.Count > 2)
+            if (gReg.Match(str)?.Value == str)
             {
-                seconds = new Milliseconds(int.Parse(g[1].Value), g[2].Value);
+                seconds = str.Split(":")
+                             .Select(t => partialReg.Match(t).Groups)
+                             .Select(g => new Milliseconds(int.Parse(g[1].Value), g[2].Value))
+                             .Aggregate(0.ms(), (ac, t) => ac + t);
                 return true;
             }
             seconds = null;
@@ -119,7 +137,6 @@ namespace devoft.MeassureSystem.Time
 
         public override int GetHashCode()
             => Value.GetHashCode();
-
 
         public override string ToString()
             => OriginalUnit switch
@@ -135,10 +152,10 @@ namespace devoft.MeassureSystem.Time
         public string ToString(string format)
             => ((TimeSpan)this).ToString(format);
 
-        public void Deconstruct(out int hour, out int minutes, out int seconds, out int milliseconds)
+        public void Deconstruct(out int day, out int hour, out int minutes, out int seconds, out int milliseconds)
         {
             TimeSpan ts = this;
-            (hour, minutes, seconds, milliseconds) = (ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds);
+            (day, hour, minutes, seconds, milliseconds) = (ts.Days, ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds);
         }
     }
 }
