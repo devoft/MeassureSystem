@@ -19,6 +19,9 @@ namespace devoft.MeassureSystem.Test
         {
             var (d,h,min,s,ms) = Milliseconds.Parse("3d:1min:30s");
             Assert.AreEqual((3, 0, 1, 30, 0), (d, h, min, s, ms));
+
+            (d, h, min, s, ms) = Milliseconds.Parse("3.0:1:30.0");
+            Assert.AreEqual((3, 0, 1, 30, 0), (d, h, min, s, ms));
         }
 
         [TestMethod]
