@@ -13,16 +13,16 @@ Easy to use Meassures on C# code as it can be seen in the next sections:
 ## Units
 ### Length
 ```CSharp
-Meter m = new Meter(6);                      // 6m
-Meter m = 5.cm();                            // 5cm
-Meter m = 2.cm() + 5.dm()                    // 0.52m
-var m1 = -2.cm()                             // -2cm
-var m = 2.km() + "20in"                      //2000.508m                
+Length l = new Length(6);                      // 6m
+Length l = 5.cm();                             // 5cm
+Length l = 2.cm() + 5.dm()                     // 0.52m
+var l1 = -2.cm()                               // -2cm
+var l = 2.km() + "20in"                        //2000.508m                
 ```
 
 ### Volume
 ```Csharp
-Meter3 lt = 5.cm() * 2.m() * 7.dm();        //0.07m3       
+Volume lt = 5.cm() * 2.m() * 7.dm();          //0.07m3       
 ```
 ### Weight
 ```CSharp
@@ -48,9 +48,9 @@ string m = 5.cm().ToString("N02");           // "5.00cm"
 ```
 ### Parse
 ```CSharp
-Meter m = Meter.Parse("3cm");                 // 3cm
-Meter m = (Meter) "20cm";                     // 20cm
-var m = 2.km() + (Meter) "20m";               // 2020m
+Length l1 = Length.Parse("3cm");                 // 3cm
+Length l2 = (Length)"20cm";                     // 20cm
+var l3 = 2.km() + (Length) "20m";                // 2020m
 ```
 
 # Contribute
