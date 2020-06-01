@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace devoft.MeassureSystem.Time
+namespace devoft.MeassureSystem
 {
-    public struct Milliseconds
+    public struct Time
     {
         static readonly Regex gReg = new Regex(@"((([0-9]+)(?:\s)*d)\:?)?((([0-9]+)(?:\s)*h)\:?)?((([0-9]+)(?:\s)*min)\:?)?((([0-9]+)(?:\s)*s)\:?)?((([0-9]+)(?:\s)*ms)\:?)?$");
         static readonly Regex partialReg = new Regex(@"([0-9]+)(?:\s)*(s|min|h|ms|d)$");
@@ -16,7 +16,7 @@ namespace devoft.MeassureSystem.Time
         /// Creates a new Milliseconds object according <paramref name="ms"/> value.
         /// </summary>
         /// <param name="ms"></param>
-        public Milliseconds(int ms)
+        public Time(int ms)
         {
             Value = ms;
             OriginalUnit = "ms";
@@ -29,7 +29,7 @@ namespace devoft.MeassureSystem.Time
         /// </summary>
         /// <param name="value">numeric value</param>
         /// <param name="unit">time unit</param>
-        public Milliseconds(int value, string unit)
+        public Time(int value, string unit)
         {
             Value = value;
             if (unit?.In("h", "min", "s", "ms", "d") != true)
@@ -77,7 +77,7 @@ namespace devoft.MeassureSystem.Time
         /// This property is always in milliseconds, even if the object was created with another unit.
         /// Eg. new Milliseconds(2, "s").Value == 2000
         /// </summary>
-        public int Value { get; }
+        internal int Value { get; }
 
         #region [ operators ]
 
@@ -85,42 +85,42 @@ namespace devoft.MeassureSystem.Time
         /// Same as: <paramref name="seconds"/>.<see cref="Value"/>
         /// </summary>
         /// <param name="seconds"></param>
-        public static explicit operator double(Milliseconds seconds)
+        public static explicit operator double(Time seconds)
             => seconds.Value;
 
         /// <summary>
         /// Same as: new Milliseconds(<paramref name="ms"/>)
         /// </summary>
         /// <param name="ms"></param>
-        public static implicit operator Milliseconds(int ms)
-            => new Milliseconds(ms);
+        public static implicit operator Time(int ms)
+            => new Time(ms);
 
         /// <summary>
         /// Creates a Milliseconds from <paramref name="time"/>.TotalMilliseconds
         /// </summary>
         /// <param name="time"></param>
-        public static explicit operator Milliseconds (TimeSpan time) 
-            => new Milliseconds(Convert.ToInt32(time.TotalMilliseconds));
+        public static explicit operator Time (TimeSpan time) 
+            => new Time(Convert.ToInt32(time.TotalMilliseconds));
 
         /// <summary>
         /// Creates a Timespan from <paramref name="seconds"/>.<see cref="Value"/>
         /// </summary>
         /// <param name="seconds"></param>
-        public static implicit operator TimeSpan(Milliseconds seconds)
+        public static implicit operator TimeSpan(Time seconds)
             => TimeSpan.FromMilliseconds(seconds.Value);
 
         /// <summary>
         /// Same as: Milliseconds.Parse(<paramref name="time"/>)
         /// </summary>
         /// <param name="time"></param>
-        public static explicit operator Milliseconds(string time)
+        public static explicit operator Time(string time)
             => Parse(time);
 
         /// <summary>
         /// Applies <see cref="ToString"/>
         /// </summary>
         /// <param name="seconds"></param>
-        public static implicit operator string(Milliseconds seconds)
+        public static implicit operator string(Time seconds)
             => seconds.ToString();
 
         /// <summary>
@@ -129,8 +129,8 @@ namespace devoft.MeassureSystem.Time
         /// <param name="ms1"></param>
         /// <param name="ms2"></param>
         /// <returns></returns>
-        public static Milliseconds operator +(Milliseconds ms1, Milliseconds ms2)
-            => new Milliseconds(ms1.Value + ms2.Value);
+        public static Time operator +(Time ms1, Time ms2)
+            => new Time(ms1.Value + ms2.Value);
 
         /// <summary>
         /// Substract <paramref name="ms2"/> from <paramref name="ms1"/>
@@ -138,8 +138,8 @@ namespace devoft.MeassureSystem.Time
         /// <param name="ms1"></param>
         /// <param name="ms2"></param>
         /// <returns></returns>
-        public static Milliseconds operator -(Milliseconds ms1, Milliseconds ms2)
-            => new Milliseconds(ms1.Value - ms2.Value);
+        public static Time operator -(Time ms1, Time ms2)
+            => new Time(ms1.Value - ms2.Value);
 
         /// <summary>
         /// Scalar (prepend) product <paramref name="scalar"/> by <paramref name="ms"/>
@@ -147,8 +147,8 @@ namespace devoft.MeassureSystem.Time
         /// <param name="scalar"></param>
         /// <param name="ms"></param>
         /// <returns></returns>
-        public static Milliseconds operator *(int scalar, Milliseconds ms)
-            => new Milliseconds(scalar * ms.Value);
+        public static Time operator *(int scalar, Time ms)
+            => new Time(scalar * ms.Value);
 
         /// <summary>
         /// Scalar (append) product <paramref name="ms"/> by <paramref name="scalar"/> 
@@ -156,8 +156,8 @@ namespace devoft.MeassureSystem.Time
         /// <param name="ms"></param>
         /// <param name="scalar"></param>
         /// <returns></returns>
-        public static Milliseconds operator *(Milliseconds ms, int scalar)
-            => new Milliseconds(scalar * ms.Value);
+        public static Time operator *(Time ms, int scalar)
+            => new Time(scalar * ms.Value);
 
         /// <summary>
         /// Scalar division <paramref name="ms"/> by <paramref name="scalar"/>
@@ -165,8 +165,8 @@ namespace devoft.MeassureSystem.Time
         /// <param name="ms"></param>
         /// <param name="scalar"></param>
         /// <returns></returns>
-        public static Milliseconds operator /(Milliseconds ms, int scalar)
-            => new Milliseconds(ms.Value / scalar);
+        public static Time operator /(Time ms, int scalar)
+            => new Time(ms.Value / scalar);
 
         /// <summary>
         /// Divide <paramref name="ms1"/> by <paramref name="ms2"/> resulting in a double value
@@ -174,7 +174,7 @@ namespace devoft.MeassureSystem.Time
         /// <param name="ms1"></param>
         /// <param name="ms2"></param>
         /// <returns></returns>
-        public static double operator /(Milliseconds ms1, Milliseconds ms2)
+        public static double operator /(Time ms1, Time ms2)
             => ms1.Value / (double) ms2.Value;
 
         /// <summary>
@@ -182,8 +182,8 @@ namespace devoft.MeassureSystem.Time
         /// </summary>
         /// <param name="ms"></param>
         /// <returns></returns>
-        public static Milliseconds operator -(Milliseconds ms)
-            => new Milliseconds(-ms.Value, ms.OriginalUnit);
+        public static Time operator -(Time ms)
+            => new Time(-ms.Value, ms.OriginalUnit);
 
         /// <summary>
         /// Compares if <paramref name="ms1"/> is greater than <paramref name="ms2"/>
@@ -191,7 +191,7 @@ namespace devoft.MeassureSystem.Time
         /// <param name="ms1"></param>
         /// <param name="ms2"></param>
         /// <returns></returns>
-        public static bool operator >(Milliseconds ms1, Milliseconds ms2)
+        public static bool operator >(Time ms1, Time ms2)
             => ms1.Value > ms2.Value;
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace devoft.MeassureSystem.Time
         /// <param name="ms1"></param>
         /// <param name="ms2"></param>
         /// <returns></returns>
-        public static bool operator <(Milliseconds ms1, Milliseconds ms2)
+        public static bool operator <(Time ms1, Time ms2)
             => ms1.Value < ms2.Value;
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace devoft.MeassureSystem.Time
         /// <param name="ms1"></param>
         /// <param name="ms2"></param>
         /// <returns></returns>
-        public static bool operator ==(Milliseconds ms1, Milliseconds ms2)
+        public static bool operator ==(Time ms1, Time ms2)
             => ms1.Value == ms2.Value;
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace devoft.MeassureSystem.Time
         /// <param name="ms1"></param>
         /// <param name="ms2"></param>
         /// <returns></returns>
-        public static bool operator !=(Milliseconds ms1, Milliseconds ms2)
+        public static bool operator !=(Time ms1, Time ms2)
             => ms1.Value != ms2.Value;
 
 
@@ -229,7 +229,7 @@ namespace devoft.MeassureSystem.Time
         /// </summary>
         /// <param name="time">string representation of type</param>
         /// <returns>A Milisenconds value</returns>
-        public static Milliseconds Parse(string time) 
+        public static Time Parse(string time) 
             => TryParse(time, out var value)
                   ? value.Value
                   : throw new FormatException($"Invalid time format {time}");
@@ -243,18 +243,18 @@ namespace devoft.MeassureSystem.Time
         /// <param name="time">string representation of type</param>
         /// <param name="seconds">A Milisenconds value</param>
         /// <returns>Whether the parsing success</returns>
-        public static bool TryParse(string str, out Milliseconds? seconds)
+        public static bool TryParse(string str, out Time? seconds)
         {
             if (TimeSpan.TryParse(str, out var ts))
             {
-                seconds = (Milliseconds) ts;
+                seconds = (Time) ts;
                 return true;
             }
             if (gReg.Match(str)?.Value == str)
             {
                 seconds = str.Split(":")
                              .Select(t => partialReg.Match(t).Groups)
-                             .Select(g => new Milliseconds(int.Parse(g[1].Value), g[2].Value))
+                             .Select(g => new Time(int.Parse(g[1].Value), g[2].Value))
                              .Aggregate(0.ms(), (ac, t) => ac + t);
                 return true;
             }
@@ -263,7 +263,7 @@ namespace devoft.MeassureSystem.Time
         }
 
         public override bool Equals(object obj)
-            => ((Milliseconds)obj).Value == Value;
+            => ((Time)obj).Value == Value;
 
         public override int GetHashCode()
             => Value.GetHashCode();

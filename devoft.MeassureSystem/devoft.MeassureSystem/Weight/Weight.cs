@@ -2,13 +2,13 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace devoft.MeassureSystem.Weight
+namespace devoft.MeassureSystem
 {
-    public struct Gram
+    public struct Weight
     {
         static readonly Regex gReg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(g|kg|hg|dag|dg|cg|mg|oz|lb)$");
 
-        public Gram(decimal value)
+        public Weight(decimal value)
         {
             Value = value;
             OriginalUnit = "g";
@@ -19,7 +19,7 @@ namespace devoft.MeassureSystem.Weight
         /// </summary>
         /// <param name="value">Value</param>
         /// <param name="unit">Original unit of measure</param>
-        public Gram(decimal value, string unit)
+        public Weight(decimal value, string unit)
         {
             if (unit?.In("g", "kg", "hg", "dag", "dg", "cg", "mg", "oz", "lb") != true)
                 throw new ArgumentException("unit mut be a valid gram unit", nameof(unit));
@@ -39,67 +39,67 @@ namespace devoft.MeassureSystem.Weight
             };
         }
 
-        public static bool TryParse(string str, out Gram? gram)
+        public static bool TryParse(string str, out Weight? w)
         {
             if (gReg.Match(str)?.Groups is GroupCollection g && g.Count > 2)
             {
-                gram = new Gram(decimal.Parse(g[1].Value), g[2].Value);
+                w = new Weight(decimal.Parse(g[1].Value), g[2].Value);
                 return true;
             }
-            gram = null;
+            w = null;
             return false;
         }
 
-        public static Gram Parse(string str)
+        public static Weight Parse(string str)
             => TryParse(str, out var gram) 
                     ? gram.Value 
                     : throw new FormatException($"{nameof(str)} has invalid format");
 
         #region [ operators ]
 
-        public static implicit operator Gram(decimal d)
-            => new Gram(d);
+        public static implicit operator Weight(decimal d)
+            => new Weight(d);
 
-        public static explicit operator decimal (Gram g)
-            => g.Value;
+        public static explicit operator decimal (Weight w)
+            => w.Value;
 
-        public static explicit operator Gram (string g)
+        public static explicit operator Weight (string g)
             => Parse(g);
 
-        public static implicit operator string(Gram g)
-            => g.ToString();
+        public static implicit operator string(Weight w)
+            => w.ToString();
 
-        public static Gram operator +(Gram g1, Gram g2)
-            => new Gram(g1.Value + g2.Value);
+        public static Weight operator +(Weight w1, Weight w2)
+            => new Weight(w1.Value + w2.Value);
 
-        public static Gram operator -(Gram g1, Gram g2)
-            => new Gram(g1.Value - g2.Value);
+        public static Weight operator -(Weight w1, Weight w2)
+            => new Weight(w1.Value - w2.Value);
 
-        public static Gram operator * (decimal scalar, Gram g)
-            => new Gram(scalar * g.Value);
+        public static Weight operator * (decimal scalar, Weight g)
+            => new Weight(scalar * g.Value);
 
-        public static Gram operator *(Gram g, decimal scalar)
-            => new Gram(scalar * g.Value);
+        public static Weight operator *(Weight g, decimal scalar)
+            => new Weight(scalar * g.Value);
 
-        public static Gram operator / (Gram g, decimal scalar)
-            => new Gram(g.Value / scalar);
+        public static Weight operator / (Weight g, decimal scalar)
+            => new Weight(g.Value / scalar);
 
-        public static decimal operator /(Gram g1, Gram g2)
+        public static decimal operator /(Weight g1, Weight g2)
             => g1.Value / g2.Value;
 
-        public static Gram operator -(Gram g)
-            => new Gram(-g.Value) { OriginalUnit = g.OriginalUnit };
+        public static Weight operator -(Weight g)
+            => new Weight(-g.Value) { OriginalUnit = g.OriginalUnit };
 
-        public static bool operator >(Gram g1, Gram g2)
+        public static bool operator >(Weight g1, Weight g2)
             => g1.Value > g2.Value;
 
-        public static bool operator <(Gram g1, Gram g2)
+        public static bool operator <(Weight g1, Weight g2)
             => g1.Value < g2.Value;
 
-        public static bool operator == (Gram g1, Gram g2)
+        public static bool operator == (Weight g1, Weight g2)
             => g1.Value == g2.Value;
 
-        public static bool operator !=(Gram g1, Gram g2)
+        public static bool operator !=(Weight g1, Weight g2)
             => g1.Value != g2.Value;
 
 
@@ -147,7 +147,7 @@ namespace devoft.MeassureSystem.Weight
         #endregion [ Unit properties ]
 
         public string OriginalUnit { get; private set; }
-        public decimal Value { get; }
+        internal decimal Value { get; }
 
         public override string ToString() 
             => OriginalUnit switch
@@ -180,7 +180,7 @@ namespace devoft.MeassureSystem.Weight
             };
 
         public override bool Equals(object obj) 
-            => Value == ((Gram)obj).Value;
+            => Value == ((Weight)obj).Value;
 
         public override int GetHashCode()
             => Value.GetHashCode();

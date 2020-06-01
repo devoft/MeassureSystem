@@ -1,4 +1,4 @@
-﻿using devoft.MeassureSystem.Weight;
+﻿using devoft.MeassureSystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -12,34 +12,34 @@ namespace devoft.MeassureSystem.Test
         [TestMethod]
         public void TestParsing()
         {
-            Assert.AreEqual(35000, Gram.Parse("35kg").Value);
+            Assert.AreEqual(35000, Weight.Parse("35kg").g);
 
-            Gram g1 = (Gram) "3cg";
-            Assert.AreEqual(0.03m, g1.Value);
+            Weight g1 = (Weight) "3cg";
+            Assert.AreEqual(0.03m, g1.g);
 
-            Gram g2 = (Gram)"3oz";
-            Assert.AreEqual(85.04856m, g2.Value);
+            Weight g2 = (Weight)"3oz";
+            Assert.AreEqual(85.04856m, g2.g);
 
-            Assert.ThrowsException<FormatException>(() => { Gram g2 = (Gram) "3cm"; });
+            Assert.ThrowsException<FormatException>(() => { Weight g2 = (Weight) "3cm"; });
         }
 
         [TestMethod]
         public void TestToString()
         {
-            Gram g = new Gram(4, "cg");
+            Weight g = new Weight(4, "cg");
             Assert.AreEqual("4cg", g);
 
             string str = g;
             Assert.AreEqual("4cg", str);
             Assert.AreEqual("4.00cg", g.ToString("N02"));
 
-            Assert.AreEqual("3.14159265358979g", new Gram((decimal)Math.PI));
+            Assert.AreEqual("3.14159265358979g", new Weight((decimal)Math.PI));
         }
 
         [TestMethod]
         public void TestOperators()
         {
-            Gram g1 = 5;
+            Weight g1 = 5;
             
             Assert.AreEqual(5m,     g1                  );
             Assert.AreEqual(9m,     500.cg() + 400.cg() );
@@ -60,12 +60,12 @@ namespace devoft.MeassureSystem.Test
         [TestMethod]
         public void Conversion()
         {
-            Assert.AreEqual(0.004m, new Gram(4).kg);
-            Assert.AreEqual(0.04m, new Gram(4).hg);
-            Assert.AreEqual(0.4m, new Gram(4).dag);
-            Assert.AreEqual(40m,    new Gram(4).dg);
-            Assert.AreEqual(400m,   new Gram(4).cg);
-            Assert.AreEqual(4000m,  new Gram(4).mg);
+            Assert.AreEqual(0.004m, new Weight(4).kg);
+            Assert.AreEqual(0.04m, new Weight(4).hg);
+            Assert.AreEqual(0.4m, new Weight(4).dag);
+            Assert.AreEqual(40m,    new Weight(4).dg);
+            Assert.AreEqual(400m,   new Weight(4).cg);
+            Assert.AreEqual(4000m,  new Weight(4).mg);
 
         }
 
@@ -73,10 +73,10 @@ namespace devoft.MeassureSystem.Test
         [TestMethod]
         public void TestMiscelanea()
         {
-            Assert.AreEqual("4cg", (Gram) "4cg");
+            Assert.AreEqual("4cg", (Weight) "4cg");
             Assert.IsTrue((1.g() - 1.g().lb.lb()) < 1.mg());
             Assert.IsTrue((1.g() - 1.g().oz.oz()) < 1.mg());
-            Assert.AreEqual(2000.5m, (50.cg() + (Gram) "2kg").Value);
+            Assert.AreEqual(2000.5m, (50.cg() + (Weight) "2kg").g);
         }
     }
 }
