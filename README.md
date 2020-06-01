@@ -26,7 +26,7 @@ Volume lt = 5.cm() * 2.m() * 7.dm();          //0.07m3
 ```
 ### Weight
 ```CSharp
-Gram g = 5.lb();                              
+Weight g = 5.lb();                              
 bool b = 5.lb() > 4.5m.kg();                  
 ```
 ### Time
