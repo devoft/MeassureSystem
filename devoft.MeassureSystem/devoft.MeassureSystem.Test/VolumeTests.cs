@@ -20,20 +20,20 @@ namespace devoft.MeassureSystem.Test
         [TestMethod]
         public void Conversion()
         {
-            Assert.AreEqual(10m, new Volume(10).M3);
-            Assert.AreEqual(10000000000m, new Volume(10).Mm3);
-            Assert.AreEqual(0.00000000011m, new Volume(0.110m).Km3);
+            Assert.AreEqual(10m, new Volume(10).Meter3);
+            Assert.AreEqual(10000000000m, new Volume(10).Millimeter3);
+            Assert.AreEqual(0.00000000011m, new Volume(0.110m).Kilometer3);
         }
 
         [TestMethod]
         public void TestOperators()
         {
-            Assert.AreEqual(0.000024m, (2.cm() * 3.cm() * 4.cm()).M3);
+            Assert.AreEqual(0.000024m, (2.cm() * 3.cm() * 4.cm()).Meter3);
 
-            var m = (5.cm() * 4.cm()).M2 * 4.cm();
+            var m = (5.cm() * 4.cm()).Meter2 * 4.cm();
             Assert.AreEqual(0.00008m, m.Meter);
 
-            m = 5.cm() * (5.cm() * 4.cm()).M2;
+            m = 5.cm() * (5.cm() * 4.cm()).Meter2;
             Assert.AreEqual(0.0001m, m.Meter);
 
             Assert.AreEqual(250, 1.km3() / 4.hm3());

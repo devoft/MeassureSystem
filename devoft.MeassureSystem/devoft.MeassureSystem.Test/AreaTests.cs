@@ -9,18 +9,18 @@ namespace devoft.MeassureSystem.Test
         public void TestConstructor()
         {
             Area m2 = new Area(5);
-            Assert.AreEqual(5, m2.M2);
+            Assert.AreEqual(5, m2.Meter2);
         }
 
         [TestMethod]
         public void TestParsing()
         {
-            Assert.AreEqual(5000000, Area.Parse("5km2").M2);
+            Assert.AreEqual(5000000, Area.Parse("5km2").Meter2);
 
             Area m1 = (Area)"20cm2";
-            Assert.AreEqual(0.002m, m1.M2);
+            Assert.AreEqual(0.002m, m1.Meter2);
 
-            Assert.AreEqual(0.00006m, ((Area)"60mm2").M2);
+            Assert.AreEqual(0.00006m, ((Area)"60mm2").Meter2);
         }
 
         [TestMethod]
@@ -48,20 +48,20 @@ namespace devoft.MeassureSystem.Test
         [TestMethod]
         public void TestOperators()
         {
-            Assert.AreEqual(0.0502m, (2.cm2() + 5.dm2()).M2);
-            Assert.AreEqual(0.0892m, (9.dm2() - 8.cm2()).M2);
-            Assert.AreEqual(0.002m, (5.cm() * 4.cm()).M2);
-            Assert.AreEqual(0.0012m, (4.cm2() * 3).M2);
-            Assert.AreEqual(0.0042m, (6 * 7.cm2()).M2);
+            Assert.AreEqual(0.0502m, (2.cm2() + 5.dm2()).Meter2);
+            Assert.AreEqual(0.0892m, (9.dm2() - 8.cm2()).Meter2);
+            Assert.AreEqual(0.002m, (5.cm() * 4.cm()).Meter2);
+            Assert.AreEqual(0.0012m, (4.cm2() * 3).Meter2);
+            Assert.AreEqual(0.0042m, (6 * 7.cm2()).Meter2);
             Assert.AreEqual(10m, 40.cm2() / 4.cm2());
-            Assert.AreEqual(0.0005m, (50.cm2() / 10).M2);
+            Assert.AreEqual(0.0005m, (50.cm2() / 10).Meter2);
             Assert.AreEqual(20.mm2(), 80.mm2() / 4);
             Assert.AreEqual(20.hm2(), 80.hm2() / 4);
             Assert.AreEqual(25000000.m2(), 1.km2() / 4.dm2());
             Assert.AreEqual(10.cm(), 40.cm2() / 4.cm());
             Assert.AreEqual(10, 40.m2() / 4);
 
-            Assert.AreEqual(0.0502m, (2m.cm2() + 5m.dm2()).M2);
+            Assert.AreEqual(0.0502m, (2m.cm2() + 5m.dm2()).Meter2);
             Assert.AreEqual(20.mm2(), 80m.mm2() / 4);
             Assert.AreEqual(20.hm2(), 80m.hm2() / 4);
             Assert.AreEqual(10, 40m.m2() / 4);

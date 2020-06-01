@@ -21,6 +21,7 @@ namespace devoft.MeassureSystem.Test
 
             (d, h, min, s, ms) = Time.Parse("3.0:1:30.0");
             Assert.AreEqual((3, 0, 1, 30, 0), (d, h, min, s, ms));
+
         }
 
         [TestMethod]

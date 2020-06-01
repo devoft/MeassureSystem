@@ -1,8 +1,6 @@
 ﻿using devoft.System.Collections.Generic;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace devoft.MeassureSystem
@@ -11,9 +9,21 @@ namespace devoft.MeassureSystem
     {
         static readonly Regex gReg = new Regex(@"((([0-9]+)(?:\s)*d)\:?)?((([0-9]+)(?:\s)*h)\:?)?((([0-9]+)(?:\s)*min)\:?)?((([0-9]+)(?:\s)*s)\:?)?((([0-9]+)(?:\s)*ms)\:?)?$");
         static readonly Regex partialReg = new Regex(@"([0-9]+)(?:\s)*(s|min|h|ms|d)$");
+        
+        /// <summary>
+        /// The amount of milliseconds corresponding with this time. 
+        /// This property is always in milliseconds, even if the object was created with another unit.
+        /// Eg. new Milliseconds(2, "s").Value == 2000
+        /// </summary>
+        internal int Value { get; }
 
         /// <summary>
-        /// Creates a new Milliseconds object according <paramref name="ms"/> value.
+        /// The unit used in the constructor to create the object
+        /// </summary>
+        public string OriginalUnit { get; }
+
+        /// <summary>
+        /// Creates a new Time object according <paramref name="ms"/> value.
         /// </summary>
         /// <param name="ms"></param>
         public Time(int ms)
@@ -23,9 +33,9 @@ namespace devoft.MeassureSystem
         }
 
         /// <summary>
-        /// Creates new Milliseconds with <paramref name="value"/> and <paramref name="unit"/>.
+        /// Creates new Time with <paramref name="value"/> and <paramref name="unit"/>.
         /// The <paramref name="value"/> is related to the <paramref name="unit"/>
-        /// Eg. new Milliseconds(4, "min");
+        /// Eg. new Time(4, "min");
         /// </summary>
         /// <param name="value">numeric value</param>
         /// <param name="unit">time unit</param>
@@ -66,18 +76,6 @@ namespace devoft.MeassureSystem
         /// The amount of days included in this time. Eg. 23.h().d == 0; 25.h().day == 1
         /// </summary>
         public int d => Value / (3_600_000 * 24);
-
-        /// <summary>
-        /// The unit used in the constructor to create the object
-        /// </summary>
-        public string OriginalUnit { get; }
-
-        /// <summary>
-        /// The amount of milliseconds corresponding with this time. 
-        /// This property is always in milliseconds, even if the object was created with another unit.
-        /// Eg. new Milliseconds(2, "s").Value == 2000
-        /// </summary>
-        internal int Value { get; }
 
         #region [ operators ]
 

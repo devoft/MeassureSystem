@@ -63,8 +63,8 @@ namespace devoft.MeassureSystem
         public static explicit operator decimal (Weight w)
             => w.Value;
 
-        public static explicit operator Weight (string g)
-            => Parse(g);
+        public static explicit operator Weight (string s)
+            => Parse(s);
 
         public static implicit operator string(Weight w)
             => w.ToString();
@@ -81,26 +81,26 @@ namespace devoft.MeassureSystem
         public static Weight operator *(Weight g, decimal scalar)
             => new Weight(scalar * g.Value);
 
-        public static Weight operator / (Weight g, decimal scalar)
-            => new Weight(g.Value / scalar);
+        public static Weight operator / (Weight w, decimal scalar)
+            => new Weight(w.Value / scalar);
 
-        public static decimal operator /(Weight g1, Weight g2)
-            => g1.Value / g2.Value;
+        public static decimal operator /(Weight w1, Weight w2)
+            => w1.Value / w2.Value;
 
-        public static Weight operator -(Weight g)
-            => new Weight(-g.Value) { OriginalUnit = g.OriginalUnit };
+        public static Weight operator -(Weight w)
+            => new Weight(-w.Value) { OriginalUnit = w.OriginalUnit };
 
-        public static bool operator >(Weight g1, Weight g2)
-            => g1.Value > g2.Value;
+        public static bool operator >(Weight w1, Weight w2)
+            => w1.Value > w2.Value;
 
-        public static bool operator <(Weight g1, Weight g2)
-            => g1.Value < g2.Value;
+        public static bool operator <(Weight w1, Weight w2)
+            => w1.Value < w2.Value;
 
-        public static bool operator == (Weight g1, Weight g2)
-            => g1.Value == g2.Value;
+        public static bool operator == (Weight w1, Weight w2)
+            => w1.Value == w2.Value;
 
-        public static bool operator !=(Weight g1, Weight g2)
-            => g1.Value != g2.Value;
+        public static bool operator !=(Weight w1, Weight w2)
+            => w1.Value != w2.Value;
 
 
         #endregion [ operators ]
@@ -132,7 +132,7 @@ namespace devoft.MeassureSystem
         /// </summary>
         public decimal cg => Value * 100m;
         /// <summary>
-        /// Malie in miligrams
+        /// Value in milligrams
         /// </summary>
         public decimal mg => Value * 1000m;
         /// <summary>

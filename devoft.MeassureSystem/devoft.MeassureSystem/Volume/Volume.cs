@@ -15,41 +15,41 @@ namespace devoft.MeassureSystem
         #region Unit properties
 
         /// <summary>
-        /// Value in cubic milimeters
+        /// Value in cubic millimeters
         /// </summary>
-        public decimal Mm3 => Value * 1000000000;
+        public decimal Millimeter3 => Value * 1000000000;
         /// <summary>
         /// Value in cubic centimeters
         /// </summary>
-        public decimal Cm3 => Value * 1000000;
+        public decimal Centimeter3 => Value * 1000000;
         /// <summary>
         /// Value in cubic decimeters
         /// </summary>
-        public decimal Dm3 => Value * 1000;
+        public decimal Decimeter3 => Value * 1000;
         /// <summary>
         /// Value in cubic meter
         /// </summary>
-        public decimal M3 => Value;
+        public decimal Meter3 => Value;
         /// <summary>
         ///  Value in cubic decameter
         /// </summary>
-        public decimal Dam3 => Value / 1000;
+        public decimal Decameter3 => Value / 1000;
         /// <summary>
         /// Value in cubic hectometer
         /// </summary>
-        public decimal Hm3 => Value / 1000000;
+        public decimal Hectometer3 => Value / 1000000;
         /// <summary>
         /// Value in cubic kilometers
         /// </summary>
-        public decimal Km3 => Value / 1000000000;
+        public decimal Kilometer3 => Value / 1000000000;
         /// <summary>
         /// Value in Milliliter
         /// </summary>
-        public decimal Ml => Value * 1000000;
+        public decimal Milliliter => Value * 1000000;
         /// <summary>
         /// Value in Liter
         /// </summary>
-        public decimal L => Value * 1000;
+        public decimal Liter => Value * 1000;
      
         #endregion Unit properties
 
@@ -121,64 +121,61 @@ namespace devoft.MeassureSystem
         public static implicit operator Volume(decimal d)
             => new Volume(d);
 
-        public static explicit operator decimal(Volume m)
-            => m.Value;
+        public static explicit operator decimal(Volume v)
+            => v.Value;
 
         public static explicit operator Volume(string s)
             => Parse(s);
 
         public static Volume Parse(string s)
-        {
-            if (TryParse(s, out var m))
-                return m.Value;
-            else
-                throw new FormatException($"Invalid format");
-        }
+            => TryParse(s, out var v)
+                    ? v.Value
+                    : throw new FormatException($"Invalid format");
 
-        public static bool TryParse(string s, out Volume? m)
+        public static bool TryParse(string s, out Volume? v)
         {
             if (m2Reg.Match(s)?.Groups is GroupCollection gc && gc.Count > 2)
             {
-                m = new Volume(decimal.Parse(gc[1].Value), gc[2].Value);
+                v = new Volume(decimal.Parse(gc[1].Value), gc[2].Value);
                 return true;
             }
-            m = null;
+            v = null;
             return false;
         }
 
-        public static Volume operator +(Volume m1, Volume m2)
-           => new Volume(m1.Value + m2.Value);
+        public static Volume operator +(Volume v1, Volume v2)
+           => new Volume(v1.Value + v2.Value);
 
-        public static Volume operator -(Volume m1, Volume m2)
-            => new Volume(m1.Value - m2.Value);
+        public static Volume operator -(Volume v1, Volume v2)
+            => new Volume(v1.Value - v2.Value);
 
-        public static Volume operator *(decimal d, Volume m)
-          => new Volume(m.Value * d);
-        public static Volume operator *(Volume m, decimal d)
-          => new Volume(m.Value * d);
+        public static Volume operator *(decimal d, Volume v)
+          => new Volume(v.Value * d);
+        public static Volume operator *(Volume v, decimal d)
+          => new Volume(v.Value * d);
 
-        public static decimal operator /(Volume m1, Volume m2)
-          => m1.Value / m2.Value;
-        public static Volume operator /(Volume m, decimal d)
-          => new Volume(m.Value / d);
-        public static Area operator /(Volume m2, Length m)
-            => new Area(m2.Value / m.Value);
+        public static decimal operator /(Volume v1, Volume v2)
+          => v1.Value / v2.Value;
+        public static Volume operator /(Volume v, decimal d)
+          => new Volume(v.Value / d);
+        public static Area operator /(Volume v2, Length l)
+            => new Area(v2.Value / l.Value);
 
-        public static Length operator /(Volume m2, Area m)
-            => new Length(m2.Value / m.Value);
+        public static Length operator /(Volume v2, Area area)
+            => new Length(v2.Value / area.Value);
 
 
-        public static bool operator ==(Volume m1, Volume m2)
-          => m1.Value == m2.Value;
+        public static bool operator ==(Volume v1, Volume v2)
+          => v1.Value == v2.Value;
 
-        public static bool operator !=(Volume m1, Volume m2)
-          => m1.Value != m2.Value;
+        public static bool operator !=(Volume v1, Volume v2)
+          => v1.Value != v2.Value;
 
-        public static bool operator >(Volume m1, Volume m2)
-          => m1.Value > m2.Value;
+        public static bool operator >(Volume v1, Volume v2)
+          => v1.Value > v2.Value;
 
-        public static bool operator <(Volume m1, Volume m2)
-          => m1.Value > m2.Value;
+        public static bool operator <(Volume v1, Volume v2)
+          => v1.Value > v2.Value;
 
         #endregion Operators
 

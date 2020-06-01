@@ -96,14 +96,14 @@ namespace devoft.MeassureSystem
                     ? m.Value
                     : throw new FormatException($"Invalid format");
 
-        public static bool TryParse(string s, out Length? m)
+        public static bool TryParse(string s, out Length? l)
         {
             if (mReg.Match(s)?.Groups is GroupCollection gc && gc.Count > 2)
             {
-                m = new Length(decimal.Parse(gc[1].Value), gc[2].Value);
+                l = new Length(decimal.Parse(gc[1].Value), gc[2].Value);
                 return true;
             }
-            m = null;
+            l = null;
             return false;
         }
 
@@ -130,67 +130,64 @@ namespace devoft.MeassureSystem
         public string ToString(string format)
           => OriginalUnit switch
             {
-                "m" => $"{Value.ToString(format)}m",
-                "mm" => $"{Millimeter.ToString(format)}mm",
-                "cm" => $"{Centimeter.ToString(format)}cm",
-                "dm" => $"{Decimeter.ToString(format)}dm",
-                "dam" => $"{Decameter.ToString(format)}dam",
-                "hm" => $"{Hectometer.ToString(format)}hm",
-                "km" => $"{Kilometer.ToString(format)}km",
-                "yd" => $"{Yard.ToString(format)}yd",
-                "in" => $"{Inch.ToString(format)}in",
-                "ft" => $"{Feet.ToString(format)}ft",
-                _ => null
+                "m"     => $"{Value.ToString(format)}m",
+                "mm"    => $"{Millimeter.ToString(format)}mm",
+                "cm"    => $"{Centimeter.ToString(format)}cm",
+                "dm"    => $"{Decimeter.ToString(format)}dm",
+                "dam"   => $"{Decameter.ToString(format)}dam",
+                "hm"    => $"{Hectometer.ToString(format)}hm",
+                "km"    => $"{Kilometer.ToString(format)}km",
+                "yd"    => $"{Yard.ToString(format)}yd",
+                "in"    => $"{Inch.ToString(format)}in",
+                "ft"    => $"{Feet.ToString(format)}ft",
+                _       => null
             };
         
-        public Length mm() => new Length(Value) { OriginalUnit = "mm" };
-        public Length cm() => new Length(Value) { OriginalUnit = "cm" };
-        public Length dm() => new Length(Value) { OriginalUnit = "dm" };
-        public Length m() => new Length(Value) { OriginalUnit = "m" };
-        public Length dam() => new Length(Value) { OriginalUnit = "dam" };
-        public Length hm() => new Length(Value) { OriginalUnit = "hm" };
-        public Length km() => new Length(Value) { OriginalUnit = "km" };
-        public Length yd() => new Length(Value) { OriginalUnit = "yd" };
-        public Length inch() => new Length(Value) { OriginalUnit = "in" };
-        public Length ft() => new Length(Value) { OriginalUnit = "ft" };
+        public Length mm()      => new Length(Value) { OriginalUnit = "mm" };
+        public Length cm()      => new Length(Value) { OriginalUnit = "cm" };
+        public Length dm()      => new Length(Value) { OriginalUnit = "dm" };
+        public Length m()       => new Length(Value) { OriginalUnit = "m" };
+        public Length dam()     => new Length(Value) { OriginalUnit = "dam" };
+        public Length hm()      => new Length(Value) { OriginalUnit = "hm" };
+        public Length km()      => new Length(Value) { OriginalUnit = "km" };
+        public Length yd()      => new Length(Value) { OriginalUnit = "yd" };
+        public Length inch()    => new Length(Value) { OriginalUnit = "in" };
+        public Length ft()      => new Length(Value) { OriginalUnit = "ft" };
 
         #region Operators
 
         public static implicit operator Length(decimal d) => new Length(d);
         
-        public static explicit operator decimal (Length m) => m.Value;
+        public static explicit operator decimal (Length l) => l.Value;
 
         public static explicit operator Length(string s) => Parse(s);
 
-        public static implicit operator string(Length m) => m.ToString();
+        public static implicit operator string(Length l) => l.ToString();
 
-        public static Length operator + (Length m1, Length m2)
-            => new Length(m1.Value + m2.Value);
-        
-        public static Length operator -(Length m1, Length m2)
-            => new Length(m1.Value - m2.Value);
-
-        public static Length operator *(Length m, decimal d)
-           => new Length(m.Value * d);
-        public static Length operator *(decimal d, Length m)
-           => new Length(m.Value * d);
-        public static Area operator *(Length m1, Length m2)
-           => new Area(m1.Value * m2.Value);
-
-        public static decimal operator /(Length m1, Length m2)
-           => m1.Value / m2.Value;
-        public static Length operator /(Length m, decimal d)
-          => new Length(m.Value / d);
-        public static Length operator -(Length g)
-            => new Length(-g.Value) { OriginalUnit = g.OriginalUnit };
-        public static bool operator == (Length m1, Length m2)
-          => m1.Value == m2.Value;
-        public static bool operator !=(Length m1, Length m2)
-          => m1.Value != m2.Value;
-        public static bool operator > (Length m1, Length m2)
-          => m1.Value > m2.Value;
-        public static bool operator < (Length m1, Length m2)
-          => m1.Value < m2.Value;
+        public static Length operator + (Length l1, Length l2)
+            => new Length(l1.Value + l2.Value);
+        public static Length operator -(Length l1, Length l2)
+            => new Length(l1.Value - l2.Value);
+        public static Length operator *(Length l, decimal d)
+            => new Length(l.Value * d);
+        public static Length operator *(decimal d, Length l)
+            => new Length(l.Value * d);
+        public static Area operator *(Length l1, Length l2)
+            => new Area(l1.Value * l2.Value);
+        public static decimal operator /(Length l1, Length l2)
+            => l1.Value / l2.Value;
+        public static Length operator /(Length l, decimal d)
+            => new Length(l.Value / d);
+        public static Length operator -(Length l)
+            => new Length(-l.Value) { OriginalUnit = l.OriginalUnit };
+        public static bool operator == (Length l1, Length l2)
+            => l1.Value == l2.Value;
+        public static bool operator !=(Length l1, Length l2)
+            => l1.Value != l2.Value;
+        public static bool operator > (Length l1, Length l2)
+            => l1.Value > l2.Value;
+        public static bool operator < (Length l1, Length l2)
+            => l1.Value < l2.Value;
 
         #endregion Operators
 
