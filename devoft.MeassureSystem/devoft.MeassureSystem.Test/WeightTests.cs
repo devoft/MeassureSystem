@@ -4,18 +4,18 @@ using System;
 namespace devoft.MeassureSystem.Test
 {
     [TestClass]
-    public class GramTests
+    public class WeightTests
     {
         [TestMethod]
         public void TestParsing()
         {
-            Assert.AreEqual(35000, Weight.Parse("35kg").g);
+            Assert.AreEqual(35000, Weight.Parse("35kg").Grams);
 
             Weight g1 = (Weight) "3cg";
-            Assert.AreEqual(0.03m, g1.g);
+            Assert.AreEqual(0.03m, g1.Grams);
 
             Weight g2 = (Weight)"3oz";
-            Assert.AreEqual(85.04856m, g2.g);
+            Assert.AreEqual(85.04856m, g2.Grams);
 
             Assert.ThrowsException<FormatException>(() => { Weight g2 = (Weight) "3cm"; });
         }
@@ -57,12 +57,12 @@ namespace devoft.MeassureSystem.Test
         [TestMethod]
         public void Conversion()
         {
-            Assert.AreEqual(0.004m, new Weight(4).kg);
-            Assert.AreEqual(0.04m, new Weight(4).hg);
-            Assert.AreEqual(0.4m, new Weight(4).dag);
-            Assert.AreEqual(40m,    new Weight(4).dg);
-            Assert.AreEqual(400m,   new Weight(4).cg);
-            Assert.AreEqual(4000m,  new Weight(4).mg);
+            Assert.AreEqual(0.004m, new Weight(4).Kilograms);
+            Assert.AreEqual(0.04m, new Weight(4).Hectograms);
+            Assert.AreEqual(0.4m, new Weight(4).Decagrams);
+            Assert.AreEqual(40m,    new Weight(4).Decigrams);
+            Assert.AreEqual(400m,   new Weight(4).Centigrams);
+            Assert.AreEqual(4000m,  new Weight(4).Milligrams);
 
         }
 
@@ -71,9 +71,9 @@ namespace devoft.MeassureSystem.Test
         public void TestMiscelanea()
         {
             Assert.AreEqual("4cg", (Weight) "4cg");
-            Assert.IsTrue((1.g() - 1.g().lb.lb()) < 1.mg());
-            Assert.IsTrue((1.g() - 1.g().oz.oz()) < 1.mg());
-            Assert.AreEqual(2000.5m, (50.cg() + (Weight) "2kg").g);
+            Assert.IsTrue((1.g() - 1.g().Pounds.lb()) < 1.mg());
+            Assert.IsTrue((1.g() - 1.g().Ounces.oz()) < 1.mg());
+            Assert.AreEqual(2000.5m, (50.cg() + (Weight) "2kg").Grams);
         }
     }
 }

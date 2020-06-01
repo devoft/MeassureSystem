@@ -9,11 +9,11 @@ namespace devoft.MeassureSystem
     {
         static readonly Regex gReg = new Regex(@"((([0-9]+)(?:\s)*d)\:?)?((([0-9]+)(?:\s)*h)\:?)?((([0-9]+)(?:\s)*min)\:?)?((([0-9]+)(?:\s)*s)\:?)?((([0-9]+)(?:\s)*ms)\:?)?$");
         static readonly Regex partialReg = new Regex(@"([0-9]+)(?:\s)*(s|min|h|ms|d)$");
-        
+
         /// <summary>
-        /// The amount of milliseconds corresponding with this time. 
+        /// The amount of Time corresponding with this time. 
         /// This property is always in milliseconds, even if the object was created with another unit.
-        /// Eg. new Milliseconds(2, "s").Value == 2000
+        /// Eg. new Time(2, "s").Value == 2000
         /// </summary>
         internal int Value { get; }
 
@@ -87,14 +87,14 @@ namespace devoft.MeassureSystem
             => seconds.Value;
 
         /// <summary>
-        /// Same as: new Milliseconds(<paramref name="ms"/>)
+        /// Same as: new Time(<paramref name="ms"/>)
         /// </summary>
         /// <param name="ms"></param>
         public static implicit operator Time(int ms)
             => new Time(ms);
 
         /// <summary>
-        /// Creates a Milliseconds from <paramref name="time"/>.TotalMilliseconds
+        /// Creates a Time from <paramref name="time"/>.TotalMilliseconds
         /// </summary>
         /// <param name="time"></param>
         public static explicit operator Time (TimeSpan time) 
@@ -108,7 +108,7 @@ namespace devoft.MeassureSystem
             => TimeSpan.FromMilliseconds(seconds.Value);
 
         /// <summary>
-        /// Same as: Milliseconds.Parse(<paramref name="time"/>)
+        /// Same as: Time.Parse(<paramref name="time"/>)
         /// </summary>
         /// <param name="time"></param>
         public static explicit operator Time(string time)
@@ -122,7 +122,7 @@ namespace devoft.MeassureSystem
             => seconds.ToString();
 
         /// <summary>
-        /// Sums two milliseconds
+        /// Sums two Time
         /// </summary>
         /// <param name="ms1"></param>
         /// <param name="ms2"></param>
@@ -220,27 +220,28 @@ namespace devoft.MeassureSystem
         #endregion [ operators ]
 
         /// <summary>
-        /// Converts the string representation of time to its Milliseconds value. 
+        /// Converts the string representation of time to its Time value. 
         /// 4d<br/>2h<br/>2min<br/>3s<br/>5ms<br/>
         /// 2d:5h:15min:20s:100ms <br/>
         /// 2.5:15:20.100 (<see cref="TimeSpan.TryParse(string, out TimeSpan)"/>)
         /// </summary>
         /// <param name="time">string representation of type</param>
-        /// <returns>A Milisenconds value</returns>
+        /// <returns>A Time value</returns>
+        /// <exception cref="FormatException">If <paramref name="str"/> is not in a correct format</exception>
         public static Time Parse(string time) 
             => TryParse(time, out var value)
                   ? value.Value
                   : throw new FormatException($"Invalid time format {time}");
 
         /// <summary>
-        /// Try to convert the string representation of time to its Milliseconds value; either in the following formats: <br/>
+        /// Try to convert the string representation of time to its Time value; either in the following formats: <br/>
         /// 4d<br/>2h<br/>2min<br/>3s<br/>5ms<br/>
         /// 2d:5h:15min:20s:100ms <br/>
         /// 2.5:15:20.100 (<see cref="TimeSpan.TryParse(string, out TimeSpan)"/>)
         /// </summary>
-        /// <param name="time">string representation of type</param>
-        /// <param name="seconds">A Milisenconds value</param>
-        /// <returns>Whether the parsing success</returns>
+        /// <param name="time">string representation of time</param>
+        /// <param name="seconds">A Time value</param>
+        /// <returns>Whether the parsing succeded</returns>
         public static bool TryParse(string str, out Time? seconds)
         {
             if (TimeSpan.TryParse(str, out var ts))
@@ -267,7 +268,7 @@ namespace devoft.MeassureSystem
             => Value.GetHashCode();
 
         /// <summary>
-        /// String representation of the Milliseconds expressed using a conversion to 
+        /// String representation of the Time expressed using a conversion to 
         /// the <see cref="OriginalUnit"/> it was used in the constructor.
         /// </summary>
         /// <param name="obj"></param>
@@ -285,7 +286,7 @@ namespace devoft.MeassureSystem
 
         /// <summary>
         /// Uses <see cref="TimeSpan.ToString(string)"/> method to create formatted 
-        /// string representation of this Milliseconds object.
+        /// string representation of this Time object.
         /// </summary>
         /// <param name="format"></param>
         /// <returns></returns>
