@@ -17,7 +17,7 @@ Length l = new Length(6);                      // 6m
 Length l = 5.cm();                             // 5cm
 Length l = 2.cm() + 5.dm()                     // 0.52m
 var l1 = -2.cm()                               // -2cm
-var l = 2.km() + "20in"                        //2000.508m                
+var l = 2.km() + (Length)"20in"                        //2000.508m                
 ```
 
 ### Volume
