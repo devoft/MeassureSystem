@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using devoft.MeassureSystem;
 using System;
 
 namespace devoft.MeassureSystem.Test

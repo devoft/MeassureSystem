@@ -2,48 +2,35 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace devoft.MeassureSystem.UI
+namespace devoft.MeassureSystem
 {
     public struct Pixel
     {
-        public static Regex mReg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(px)$");
+        public static Regex mReg = new Regex(@"([0-9]+)(?:\s)*(px)$");
         public int Value { get; }
-        public string OriginalUnit { get; private set; }
+        
+        #region Unit properties
 
         /// <summary>
         /// Value in pixel
         /// </summary>
         public int Px => Value;
-
         /// <summary>
-        /// Value in millimemeter
+        /// Value in millimeter
         /// </summary>
         public decimal Mm => (Value * 3.779528m);
+
+        #endregion
 
         public Pixel(int number)
         {
             Value = number;
-            OriginalUnit = "px";
         }
 
-        public Pixel(int number, string unit)
-        {
-            Value = number;
-            OriginalUnit = unit;
-        }
+        public Pixel px() => this;
 
-        public Pixel px() => new Pixel(Value) { OriginalUnit = "px" };
-
-        public override string ToString()
-        {
-            var val = Value * OriginalUnit switch
-                              {
-                                  "px" => 1u,
-                                  "mm" => 3.779528m,
-                                  _ => 0m
-                              };
-            return $"{val:0.####################}{OriginalUnit}";
-        }
+        public override string ToString() 
+            => $"{Value}px";
 
         #region Operators
 
@@ -62,7 +49,7 @@ namespace devoft.MeassureSystem.UI
         {
             if (mReg.Match(s)?.Groups is GroupCollection gc && gc.Count > 2)
             {
-                m = new Pixel(int.Parse(gc[1].Value), gc[2].Value);
+                m = new Pixel(int.Parse(gc[1].Value));
                 return true;
             }
             m = null;

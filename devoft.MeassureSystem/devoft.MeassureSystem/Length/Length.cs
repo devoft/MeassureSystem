@@ -1,5 +1,4 @@
-﻿using devoft.MeassureSystem;
-using devoft.System.Collections.Generic;
+﻿using devoft.System.Collections.Generic;
 using System;
 using System.Text.RegularExpressions;
 
@@ -7,45 +6,44 @@ namespace devoft.MeassureSystem
 {
     public struct Length
     {
-        public static Regex mReg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(mm|cm|dm|m|dam|hm|km|yd|in|ft|px)$");
-
+        public static Regex mReg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(mm|cm|dm|m|dam|hm|km|yd|in|ft)$");
         internal decimal Value { get; }
         public string OriginalUnit { get; private set; }
 
         #region Unit properties
 
         /// <summary>
-        /// Value in milimeters
+        /// Value in millimeters
         /// </summary>
-        public decimal Mm => Value * 1000;
+        public decimal Millimeter => Value * 1000;
         /// <summary>
         /// Value in centimeters
         /// </summary>
-        public decimal Cm => Value * 100;
+        public decimal Centimeter => Value * 100;
         /// <summary>
         /// Value in decimeters
         /// </summary>
-        public decimal Dm => Value * 10;
+        public decimal Decimeter => Value * 10;
         /// <summary>
-        /// Value in meter
+        /// Value in meters
         /// </summary>
-        public decimal M => Value ;
+        public decimal Meter => Value ;
         /// <summary>
-        ///  Value in decameter
+        ///  Value in decameters
         /// </summary>
-        public decimal Dam => Value / 10;
+        public decimal Decameter => Value / 10;
         /// <summary>
-        /// Value in hectometer
+        /// Value in hectometers
         /// </summary>
-        public decimal Hm => Value / 100;
+        public decimal Hectometer => Value / 100;
         /// <summary>
         /// Value in kilometers
         /// </summary>
-        public decimal Km => Value / 1000;
+        public decimal Kilometer => Value / 1000;
         /// <summary>
         /// Value in yards
         /// </summary>
-        public decimal Yd => Value * 1.093613m;
+        public decimal Yard => Value * 1.093613m;
         /// <summary>
         /// Value in inches
         /// </summary>
@@ -53,11 +51,7 @@ namespace devoft.MeassureSystem
         /// <summary>
         /// Value in feet
         /// </summary>
-        public decimal Ft => Value * 3.28084m;
-        /// <summary>
-        /// Value in pixel
-        /// </summary>
-        public decimal Px => Value * 3779.57517575m;
+        public decimal Feet => Value * 3.28084m;
 
         #endregion Unit properties
 
@@ -78,7 +72,7 @@ namespace devoft.MeassureSystem
         /// <param name="unit">Original unit of measure</param>
         public Length(decimal value, string unit)
         {
-            if (unit?.In("mm", "cm", "dm", "m", "dam", "hm", "km", "yd", "in","ft", "px") != true)
+            if (unit?.In("mm", "cm", "dm", "m", "dam", "hm", "km", "yd", "in","ft") != true)
                 throw new ArgumentException($"unit mut be a valid meter unit");
             OriginalUnit = unit;
             Value = value * unit switch
@@ -93,7 +87,6 @@ namespace devoft.MeassureSystem
                                 "yd"    => 0.9144m,//1.093613m,
                                 "in"    => 0.0254m, //39.37008m,
                                 "ft"    => 0.3048m,//3.28084m,
-                                "px"    => 0.00026458m,
                                 _       => 0m
                             };
         }
@@ -128,9 +121,9 @@ namespace devoft.MeassureSystem
                                   "yd"      => 1.093613m,
                                   "in"      => 39.37008m,
                                   "ft"      => 3.28084m,
-                                  "px"      => 3779.57517575m,
                                   _         => 0m
                               };
+            
             return $"{val:0.####################}{OriginalUnit}";
         }
 
@@ -138,16 +131,15 @@ namespace devoft.MeassureSystem
           => OriginalUnit switch
             {
                 "m" => $"{Value.ToString(format)}m",
-                "mm" => $"{Mm.ToString(format)}mm",
-                "cm" => $"{Cm.ToString(format)}cm",
-                "dm" => $"{Dm.ToString(format)}dm",
-                "dam" => $"{Dam.ToString(format)}dam",
-                "hm" => $"{Hm.ToString(format)}hm",
-                "km" => $"{Km.ToString(format)}km",
-                "yd" => $"{Yd.ToString(format)}yd",
+                "mm" => $"{Millimeter.ToString(format)}mm",
+                "cm" => $"{Centimeter.ToString(format)}cm",
+                "dm" => $"{Decimeter.ToString(format)}dm",
+                "dam" => $"{Decameter.ToString(format)}dam",
+                "hm" => $"{Hectometer.ToString(format)}hm",
+                "km" => $"{Kilometer.ToString(format)}km",
+                "yd" => $"{Yard.ToString(format)}yd",
                 "in" => $"{Inch.ToString(format)}in",
-                "ft" => $"{Ft.ToString(format)}ft",
-                "px" => $"{Px.ToString(format)}px",
+                "ft" => $"{Feet.ToString(format)}ft",
                 _ => null
             };
         
@@ -161,7 +153,6 @@ namespace devoft.MeassureSystem
         public Length yd() => new Length(Value) { OriginalUnit = "yd" };
         public Length inch() => new Length(Value) { OriginalUnit = "in" };
         public Length ft() => new Length(Value) { OriginalUnit = "ft" };
-        public Length px => new Length(Value) { OriginalUnit = "px" };
 
         #region Operators
 

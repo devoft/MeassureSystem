@@ -10,21 +10,21 @@ namespace devoft.MeassureSystem.Test
         public void TestConstructor()
         {
             Length m = new Length(6);
-            Assert.AreEqual(6, m.M);
+            Assert.AreEqual(6, m.Meter);
         }
 
         [TestMethod]
         public void TestParsing()
         {
-            Assert.AreEqual(5000, Length.Parse("5km").M);
+            Assert.AreEqual(5000, Length.Parse("5km").Meter);
             Length m1 = (Length) "10cm";
-            Assert.AreEqual(0.1m, m1.M);
+            Assert.AreEqual(0.1m, m1.Meter);
             m1 = (Length)"5yd";
-            Assert.AreEqual(4.572m, m1.M);
+            Assert.AreEqual(4.572m, m1.Meter);
             m1 = (Length)"5in";
-            Assert.AreEqual(0.127m, m1.M);
+            Assert.AreEqual(0.127m, m1.Meter);
             m1 = (Length)"5ft";
-            Assert.AreEqual(1.524m, m1.M);
+            Assert.AreEqual(1.524m, m1.Meter);
             Assert.AreEqual("3cm",Length.Parse("3cm"));
             Assert.AreEqual("20cm", (Length)"20cm");
             Assert.AreEqual("2020m", 2.km() + (Length)"20m");
@@ -45,16 +45,16 @@ namespace devoft.MeassureSystem.Test
         [TestMethod]
         public void Conversion()
         {
-            Assert.AreEqual(5000m, new Length(5).Mm);
-            Assert.AreEqual(500m, new Length(5).Cm);
-            Assert.AreEqual(50m, new Length(5).Dm);
-            Assert.AreEqual(5m, new Length(5).M);
-            Assert.AreEqual(0.8m, new Length(8).Dam);
-            Assert.AreEqual(0.08m, new Length(8).Hm);
-            Assert.AreEqual(0.002m, new Length(2).Km);
-            Assert.AreEqual(1.093613m, new Length(1).Yd);
+            Assert.AreEqual(5000m, new Length(5).Millimeter);
+            Assert.AreEqual(500m, new Length(5).Centimeter);
+            Assert.AreEqual(50m, new Length(5).Decimeter);
+            Assert.AreEqual(5m, new Length(5).Meter);
+            Assert.AreEqual(0.8m, new Length(8).Decameter);
+            Assert.AreEqual(0.08m, new Length(8).Hectometer);
+            Assert.AreEqual(0.002m, new Length(2).Kilometer);
+            Assert.AreEqual(1.093613m, new Length(1).Yard);
             Assert.AreEqual(39.37008m, new Length(1).Inch);
-            Assert.AreEqual(3.28084m, new Length(1).Ft);
+            Assert.AreEqual(3.28084m, new Length(1).Feet);
         }
 
         [TestMethod]

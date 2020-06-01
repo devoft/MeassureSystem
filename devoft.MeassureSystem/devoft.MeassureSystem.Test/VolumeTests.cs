@@ -1,5 +1,4 @@
-﻿using devoft.MeassureSystem;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace devoft.MeassureSystem.Test
 {
@@ -32,10 +31,10 @@ namespace devoft.MeassureSystem.Test
             Assert.AreEqual(0.000024m, (2.cm() * 3.cm() * 4.cm()).M3);
 
             var m = (5.cm() * 4.cm()).M2 * 4.cm();
-            Assert.AreEqual(0.00008m, m.M);
+            Assert.AreEqual(0.00008m, m.Meter);
 
             m = 5.cm() * (5.cm() * 4.cm()).M2;
-            Assert.AreEqual(0.0001m, m.M);
+            Assert.AreEqual(0.0001m, m.Meter);
 
             Assert.AreEqual(250, 1.km3() / 4.hm3());
             Assert.AreEqual(10m, 40.hm3() / 4.hm3());
