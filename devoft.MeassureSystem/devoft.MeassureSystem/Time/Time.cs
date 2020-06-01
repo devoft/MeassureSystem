@@ -59,23 +59,23 @@ namespace devoft.MeassureSystem
         /// <summary>
         /// The amount of seconds included in this time. Eg. 1500.ms().s == 1; 500.ms().s == 0
         /// </summary>
-        public int s => Value / 1000;
+        public int Seconds => Value / 1000;
         /// <summary>
         /// The amount of hours included in this time. Eg. 50.min().h == 0; 62.min().h == 1
         /// </summary>
-        public int h => Value / 3_600_000;
+        public int Hours => Value / 3_600_000;
         /// <summary>
         /// The amount of minutes included in this time. Eg. 50.s().min == 0; 62.s().min == 1
         /// </summary>
-        public int min => Value / 60_000;
+        public int Minutes => Value / 60_000;
         /// <summary>
         /// The same as: <see cref="Value"/>
         /// </summary>
-        public int ms => Value;
+        public int Milliseconds => Value;
         /// <summary>
         /// The amount of days included in this time. Eg. 23.h().d == 0; 25.h().day == 1
         /// </summary>
-        public int d => Value / (3_600_000 * 24);
+        public int Days => Value / (3_600_000 * 24);
 
         #region [ operators ]
 
@@ -276,10 +276,10 @@ namespace devoft.MeassureSystem
             => OriginalUnit switch
             {
                 "s"   => $"{Value}s",
-                "h"   => $"{h}h",
-                "min" => $"{min}min",
-                "ms"  => $"{ms}ms",
-                "d"   => $"{d}day",
+                "h"   => $"{Hours}h",
+                "min" => $"{Minutes}min",
+                "ms"  => $"{Milliseconds}ms",
+                "d"   => $"{Days}day",
                 _     => null
             };
 
