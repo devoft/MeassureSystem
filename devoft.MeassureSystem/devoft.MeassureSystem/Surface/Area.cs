@@ -1,16 +1,14 @@
-﻿using devoft.MeassureSystem.Length;
-using devoft.MeassureSystem.Volume;
-using devoft.System.Collections.Generic;
+﻿using devoft.System.Collections.Generic;
 using System;
 using System.Text.RegularExpressions;
 
-namespace devoft.MeassureSystem.Surface
+namespace devoft.MeassureSystem
 {
-    public struct Meter2
+    public struct Area
     {
         public static Regex m2Reg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(mm2|cm2|dm2|m2|dam2|hm2|km2)$");
 
-        public decimal Value { get; }
+        internal decimal Value { get; }
         public string OriginalUnit { get; private set; }
 
         #region Unit properties
@@ -50,7 +48,7 @@ namespace devoft.MeassureSystem.Surface
         /// Constructor
         /// </summary>
         /// <param name="value">Value</param>
-        public Meter2(decimal value)
+        public Area(decimal value)
         {
             Value = value;
             OriginalUnit = "m2";
@@ -61,7 +59,7 @@ namespace devoft.MeassureSystem.Surface
         /// </summary>
         /// <param name="value">Value</param>
         /// <param name="unit">Original unit of measure</param>
-        public Meter2(decimal value, string unit)
+        public Area(decimal value, string unit)
         {
             if (unit?.In("mm2", "cm2", "dm2", "m2", "dam2", "hm2", "km2") != true)
                 throw new ArgumentException($"unit mut be a valid square meter unit");
@@ -95,26 +93,26 @@ namespace devoft.MeassureSystem.Surface
             return $"{v:0.####################}{OriginalUnit}";
         }
 
-        public Meter2 mm2() => new Meter2(Value) { OriginalUnit = "mm" };
-        public Meter2 cm2() => new Meter2(Value) { OriginalUnit = "cm" };
-        public Meter2 dm2() => new Meter2(Value) { OriginalUnit = "dm" };
-        public Meter2 m2() => new Meter2(Value) { OriginalUnit = "m" };
-        public Meter2 dam2() => new Meter2(Value) { OriginalUnit = "dam" };
-        public Meter2 hm2() => new Meter2(Value) { OriginalUnit = "hm" };
-        public Meter2 km2() => new Meter2(Value) { OriginalUnit = "km" };
+        public Area mm2() => new Area(Value) { OriginalUnit = "mm" };
+        public Area cm2() => new Area(Value) { OriginalUnit = "cm" };
+        public Area dm2() => new Area(Value) { OriginalUnit = "dm" };
+        public Area m2() => new Area(Value) { OriginalUnit = "m" };
+        public Area dam2() => new Area(Value) { OriginalUnit = "dam" };
+        public Area hm2() => new Area(Value) { OriginalUnit = "hm" };
+        public Area km2() => new Area(Value) { OriginalUnit = "km" };
 
         #region Operators
 
-        public static implicit operator Meter2(decimal d)
-            => new Meter2(d);
+        public static implicit operator Area(decimal d)
+            => new Area(d);
 
-        public static explicit operator decimal(Meter2 m)
+        public static explicit operator decimal(Area m)
             => m.Value;
 
-        public static explicit operator Meter2(string s)
+        public static explicit operator Area(string s)
             => Parse(s);
 
-        public static Meter2 Parse(string s)
+        public static Area Parse(string s)
         {
             if (TryParse(s, out var m))
                 return m.Value;
@@ -122,55 +120,55 @@ namespace devoft.MeassureSystem.Surface
                 throw new FormatException($"Invalid format");
         }
 
-        public static bool TryParse(string s, out Meter2? m)
+        public static bool TryParse(string s, out Area? m)
         {
             if (m2Reg.Match(s)?.Groups is GroupCollection gc && gc.Count > 2)
             {
-                m = new Meter2(decimal.Parse(gc[1].Value), gc[2].Value);
+                m = new Area(decimal.Parse(gc[1].Value), gc[2].Value);
                 return true;
             }
             m = null;
             return false;
         }
 
-        public static Meter2 operator + (Meter2 m1, Meter2 m2)
-           => new Meter2(m1.Value + m2.Value);
+        public static Area operator + (Area m1, Area m2)
+           => new Area(m1.Value + m2.Value);
 
-        public static Meter2 operator - (Meter2 m1, Meter2 m2)
-            => new Meter2(m1.Value - m2.Value);
+        public static Area operator - (Area m1, Area m2)
+            => new Area(m1.Value - m2.Value);
 
-        public static Meter2 operator *(decimal d, Meter2 m2)
-          => new Meter2(m2.Value * d);
-        public static Meter2 operator *(Meter2 m2, decimal d)
-          => new Meter2(m2.Value * d);
-        public static Meter3 operator *(Meter2 m1, Meter m2)
-          => new Meter3(m1.Value * m2.Value);
-        public static Meter3 operator *(Meter m1, Meter2 m2)
-          => new Meter3(m1.Value * m2.Value);
+        public static Area operator *(decimal d, Area m2)
+          => new Area(m2.Value * d);
+        public static Area operator *(Area m2, decimal d)
+          => new Area(m2.Value * d);
+        public static Volume operator *(Area m1, Length m2)
+          => new Volume(m1.Value * m2.Value);
+        public static Volume operator *(Length m1, Area m2)
+          => new Volume(m1.Value * m2.Value);
 
-        public static decimal operator /(Meter2 m1, Meter2 m2)
+        public static decimal operator /(Area m1, Area m2)
           => m1.Value / m2.Value;
-        public static Meter2 operator /(Meter2 m, decimal d)
-          => new Meter2(m.Value / d);
-        public static Meter operator /(Meter2 m2, Meter m)
-          => new Meter(m2.Value / m.Value);
+        public static Area operator /(Area m, decimal d)
+          => new Area(m.Value / d);
+        public static Length operator /(Area m2, Length m)
+          => new Length(m2.Value / m.Value);
 
-        public static bool operator ==(Meter2 m1, Meter2 m2)
+        public static bool operator ==(Area m1, Area m2)
           => m1.Value == m2.Value;
 
-        public static bool operator !=(Meter2 m1, Meter2 m2)
+        public static bool operator !=(Area m1, Area m2)
           => m1.Value != m2.Value;
 
-        public static bool operator >(Meter2 m1, Meter2 m2)
+        public static bool operator >(Area m1, Area m2)
           => m1.Value > m2.Value;
 
-        public static bool operator <(Meter2 m1, Meter2 m2)
+        public static bool operator <(Area m1, Area m2)
           => m1.Value > m2.Value;
 
         #endregion Operators
 
         public override bool Equals(object obj)
-            => Value == ((Meter2)obj).Value;
+            => Value == ((Area)obj).Value;
 
         public override int GetHashCode()
             => Value.GetHashCode();

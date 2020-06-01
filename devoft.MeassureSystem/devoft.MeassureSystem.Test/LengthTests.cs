@@ -1,42 +1,39 @@
-using devoft.MeassureSystem.Length;
-using devoft.MeassureSystem.Volume;
-using devoft.MeassureSystem.Weight;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace devoft.MeassureSystem.Test
 {
     [TestClass]
-    public class MetersTests
+    public class LengthTests
     {
 
         [TestMethod]
         public void TestConstructor()
         {
-            Meter m = new Meter(6);
-            Assert.AreEqual(6, m.Value);
+            Length m = new Length(6);
+            Assert.AreEqual(6, m.M);
         }
 
         [TestMethod]
         public void TestParsing()
         {
-            Assert.AreEqual(5000, Meter.Parse("5km").Value);
-            Meter m1 = (Meter) "10cm";
-            Assert.AreEqual(0.1m, m1.Value);
-            m1 = (Meter)"5yd";
-            Assert.AreEqual(4.572m, m1.Value);
-            m1 = (Meter)"5in";
-            Assert.AreEqual(0.127m, m1.Value);
-            m1 = (Meter)"5ft";
-            Assert.AreEqual(1.524m, m1.Value);
-            Assert.AreEqual("3cm",Meter.Parse("3cm"));
-            Assert.AreEqual("20cm", (Meter)"20cm");
-            Assert.AreEqual("2020m", 2.km() + (Meter)"20m");
+            Assert.AreEqual(5000, Length.Parse("5km").M);
+            Length m1 = (Length) "10cm";
+            Assert.AreEqual(0.1m, m1.M);
+            m1 = (Length)"5yd";
+            Assert.AreEqual(4.572m, m1.M);
+            m1 = (Length)"5in";
+            Assert.AreEqual(0.127m, m1.M);
+            m1 = (Length)"5ft";
+            Assert.AreEqual(1.524m, m1.M);
+            Assert.AreEqual("3cm",Length.Parse("3cm"));
+            Assert.AreEqual("20cm", (Length)"20cm");
+            Assert.AreEqual("2020m", 2.km() + (Length)"20m");
         }
 
         [TestMethod]
         public void TestToString()
         {
-            Meter m = new Meter(5, "km");
+            Length m = new Length(5, "km");
             Assert.AreEqual("5km", m.ToString());
             Assert.AreEqual("5.00cm", 5.cm().ToString("N02"));
             Assert.AreEqual("5.00yd", 5.yd().ToString("N02"));
@@ -48,22 +45,22 @@ namespace devoft.MeassureSystem.Test
         [TestMethod]
         public void Conversion()
         {
-            Assert.AreEqual(5000m, new Meter(5).Mm);
-            Assert.AreEqual(500m, new Meter(5).Cm);
-            Assert.AreEqual(50m, new Meter(5).Dm);
-            Assert.AreEqual(5m, new Meter(5).M);
-            Assert.AreEqual(0.8m, new Meter(8).Dam);
-            Assert.AreEqual(0.08m, new Meter(8).Hm);
-            Assert.AreEqual(0.002m, new Meter(2).Km);
-            Assert.AreEqual(1.093613m, new Meter(1).Yd);
-            Assert.AreEqual(39.37008m, new Meter(1).Inch);
-            Assert.AreEqual(3.28084m, new Meter(1).Ft);
+            Assert.AreEqual(5000m, new Length(5).Mm);
+            Assert.AreEqual(500m, new Length(5).Cm);
+            Assert.AreEqual(50m, new Length(5).Dm);
+            Assert.AreEqual(5m, new Length(5).M);
+            Assert.AreEqual(0.8m, new Length(8).Dam);
+            Assert.AreEqual(0.08m, new Length(8).Hm);
+            Assert.AreEqual(0.002m, new Length(2).Km);
+            Assert.AreEqual(1.093613m, new Length(1).Yd);
+            Assert.AreEqual(39.37008m, new Length(1).Inch);
+            Assert.AreEqual(3.28084m, new Length(1).Ft);
         }
 
         [TestMethod]
         public void TestOperators()
         {
-            Meter m = 8;
+            Length m = 8;
             Assert.AreEqual(8m , m);
             Assert.AreEqual(55m, 500.cm() + 500.dm());
             Assert.AreEqual(0.05m, 5.cm());

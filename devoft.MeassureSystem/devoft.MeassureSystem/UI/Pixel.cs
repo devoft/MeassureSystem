@@ -1,4 +1,4 @@
-﻿using devoft.MeassureSystem.Length;
+﻿using devoft.MeassureSystem;
 using System;
 using System.Text.RegularExpressions;
 
@@ -69,10 +69,10 @@ namespace devoft.MeassureSystem.UI
             return false;
         }
 
-        public static implicit operator Pixel(Meter m)
+        public static implicit operator Pixel(Length m)
             => new Pixel(Convert.ToInt32(m.Inch * 96));
 
-        public static explicit operator Meter(Pixel p)
+        public static explicit operator Length(Pixel p)
             => (p.Value / 96).inch();
 
         public static Pixel operator +(Pixel p1, Pixel p2)

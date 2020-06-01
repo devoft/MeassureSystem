@@ -1,5 +1,4 @@
-﻿using devoft.MeassureSystem.Length;
-using devoft.MeassureSystem.Volume;
+﻿using devoft.MeassureSystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace devoft.MeassureSystem.Test
@@ -22,21 +21,21 @@ namespace devoft.MeassureSystem.Test
         [TestMethod]
         public void Conversion()
         {
-            Assert.AreEqual(10m, new Meter3(10).M3);
-            Assert.AreEqual(10000000000m, new Meter3(10).Mm3);
-            Assert.AreEqual(0.00000000011m, new Meter3(0.110m).Km3);
+            Assert.AreEqual(10m, new Volume(10).M3);
+            Assert.AreEqual(10000000000m, new Volume(10).Mm3);
+            Assert.AreEqual(0.00000000011m, new Volume(0.110m).Km3);
         }
 
         [TestMethod]
         public void TestOperators()
         {
-            Assert.AreEqual(0.000024m, (2.cm() * 3.cm() * 4.cm()).Value);
+            Assert.AreEqual(0.000024m, (2.cm() * 3.cm() * 4.cm()).M3);
 
-            var m3 = (5.cm() * 4.cm()).Value * 4.cm();
-            Assert.AreEqual(0.00008m, m3.Value);
+            var m = (5.cm() * 4.cm()).M2 * 4.cm();
+            Assert.AreEqual(0.00008m, m.M);
 
-            m3 = 5.cm() * (5.cm() * 4.cm()).Value;
-            Assert.AreEqual(0.0001m, m3.Value);
+            m = 5.cm() * (5.cm() * 4.cm()).M2;
+            Assert.AreEqual(0.0001m, m.M);
 
             Assert.AreEqual(250, 1.km3() / 4.hm3());
             Assert.AreEqual(10m, 40.hm3() / 4.hm3());
@@ -44,8 +43,8 @@ namespace devoft.MeassureSystem.Test
             Assert.AreEqual(10m, 40.dm3() / 4.dm3());
 
             Assert.AreEqual(10m, 40.l() / 4.l());
-            Assert.AreEqual(5.l(), new Meter3(100.l() / 20.l(),"l"));
-            Assert.AreEqual(5.ml(), new Meter3(100.ml() / 20.ml(), "ml"));
+            Assert.AreEqual(5.l(), new Volume(100.l() / 20.l(),"l"));
+            Assert.AreEqual(5.ml(), new Volume(100.ml() / 20.ml(), "ml"));
             Assert.AreEqual(0.000005m, 100.ml() / 20m);
 
             Assert.AreEqual(10m, 40m.dm3() / 4m.dm3());

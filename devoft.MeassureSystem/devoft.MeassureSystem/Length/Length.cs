@@ -1,15 +1,15 @@
-﻿using devoft.MeassureSystem.Surface;
+﻿using devoft.MeassureSystem;
 using devoft.System.Collections.Generic;
 using System;
 using System.Text.RegularExpressions;
 
-namespace devoft.MeassureSystem.Length
+namespace devoft.MeassureSystem
 {
-    public struct Meter
+    public struct Length
     {
         public static Regex mReg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(mm|cm|dm|m|dam|hm|km|yd|in|ft|px)$");
 
-        public decimal Value { get; }
+        internal decimal Value { get; }
         public string OriginalUnit { get; private set; }
 
         #region Unit properties
@@ -65,7 +65,7 @@ namespace devoft.MeassureSystem.Length
         /// Constructor
         /// </summary>
         /// <param name="value">Value</param>
-        public Meter(decimal value)
+        public Length(decimal value)
         {
             Value = value;
             OriginalUnit = "m";
@@ -76,7 +76,7 @@ namespace devoft.MeassureSystem.Length
         /// </summary>
         /// <param name="value">Value</param>
         /// <param name="unit">Original unit of measure</param>
-        public Meter(decimal value, string unit)
+        public Length(decimal value, string unit)
         {
             if (unit?.In("mm", "cm", "dm", "m", "dam", "hm", "km", "yd", "in","ft", "px") != true)
                 throw new ArgumentException($"unit mut be a valid meter unit");
@@ -98,16 +98,16 @@ namespace devoft.MeassureSystem.Length
                             };
         }
 
-        public static Meter Parse(string s)
+        public static Length Parse(string s)
             => TryParse(s, out var m)
                     ? m.Value
                     : throw new FormatException($"Invalid format");
 
-        public static bool TryParse(string s, out Meter? m)
+        public static bool TryParse(string s, out Length? m)
         {
             if (mReg.Match(s)?.Groups is GroupCollection gc && gc.Count > 2)
             {
-                m = new Meter(decimal.Parse(gc[1].Value), gc[2].Value);
+                m = new Length(decimal.Parse(gc[1].Value), gc[2].Value);
                 return true;
             }
             m = null;
@@ -151,60 +151,60 @@ namespace devoft.MeassureSystem.Length
                 _ => null
             };
         
-        public Meter mm() => new Meter(Value) { OriginalUnit = "mm" };
-        public Meter cm() => new Meter(Value) { OriginalUnit = "cm" };
-        public Meter dm() => new Meter(Value) { OriginalUnit = "dm" };
-        public Meter m() => new Meter(Value) { OriginalUnit = "m" };
-        public Meter dam() => new Meter(Value) { OriginalUnit = "dam" };
-        public Meter hm() => new Meter(Value) { OriginalUnit = "hm" };
-        public Meter km() => new Meter(Value) { OriginalUnit = "km" };
-        public Meter yd() => new Meter(Value) { OriginalUnit = "yd" };
-        public Meter inch() => new Meter(Value) { OriginalUnit = "in" };
-        public Meter ft() => new Meter(Value) { OriginalUnit = "ft" };
-        public Meter px => new Meter(Value) { OriginalUnit = "px" };
+        public Length mm() => new Length(Value) { OriginalUnit = "mm" };
+        public Length cm() => new Length(Value) { OriginalUnit = "cm" };
+        public Length dm() => new Length(Value) { OriginalUnit = "dm" };
+        public Length m() => new Length(Value) { OriginalUnit = "m" };
+        public Length dam() => new Length(Value) { OriginalUnit = "dam" };
+        public Length hm() => new Length(Value) { OriginalUnit = "hm" };
+        public Length km() => new Length(Value) { OriginalUnit = "km" };
+        public Length yd() => new Length(Value) { OriginalUnit = "yd" };
+        public Length inch() => new Length(Value) { OriginalUnit = "in" };
+        public Length ft() => new Length(Value) { OriginalUnit = "ft" };
+        public Length px => new Length(Value) { OriginalUnit = "px" };
 
         #region Operators
 
-        public static implicit operator Meter(decimal d) => new Meter(d);
+        public static implicit operator Length(decimal d) => new Length(d);
         
-        public static explicit operator decimal (Meter m) => m.Value;
+        public static explicit operator decimal (Length m) => m.Value;
 
-        public static explicit operator Meter(string s) => Parse(s);
+        public static explicit operator Length(string s) => Parse(s);
 
-        public static implicit operator string(Meter m) => m.ToString();
+        public static implicit operator string(Length m) => m.ToString();
 
-        public static Meter operator + (Meter m1, Meter m2)
-            => new Meter(m1.Value + m2.Value);
+        public static Length operator + (Length m1, Length m2)
+            => new Length(m1.Value + m2.Value);
         
-        public static Meter operator -(Meter m1, Meter m2)
-            => new Meter(m1.Value - m2.Value);
+        public static Length operator -(Length m1, Length m2)
+            => new Length(m1.Value - m2.Value);
 
-        public static Meter operator *(Meter m, decimal d)
-           => new Meter(m.Value * d);
-        public static Meter operator *(decimal d, Meter m)
-           => new Meter(m.Value * d);
-        public static Meter2 operator *(Meter m1, Meter m2)
-           => new Meter2(m1.Value * m2.Value);
+        public static Length operator *(Length m, decimal d)
+           => new Length(m.Value * d);
+        public static Length operator *(decimal d, Length m)
+           => new Length(m.Value * d);
+        public static Area operator *(Length m1, Length m2)
+           => new Area(m1.Value * m2.Value);
 
-        public static decimal operator /(Meter m1, Meter m2)
+        public static decimal operator /(Length m1, Length m2)
            => m1.Value / m2.Value;
-        public static Meter operator /(Meter m, decimal d)
-          => new Meter(m.Value / d);
-        public static Meter operator -(Meter g)
-            => new Meter(-g.Value) { OriginalUnit = g.OriginalUnit };
-        public static bool operator == (Meter m1, Meter m2)
+        public static Length operator /(Length m, decimal d)
+          => new Length(m.Value / d);
+        public static Length operator -(Length g)
+            => new Length(-g.Value) { OriginalUnit = g.OriginalUnit };
+        public static bool operator == (Length m1, Length m2)
           => m1.Value == m2.Value;
-        public static bool operator !=(Meter m1, Meter m2)
+        public static bool operator !=(Length m1, Length m2)
           => m1.Value != m2.Value;
-        public static bool operator > (Meter m1, Meter m2)
+        public static bool operator > (Length m1, Length m2)
           => m1.Value > m2.Value;
-        public static bool operator < (Meter m1, Meter m2)
+        public static bool operator < (Length m1, Length m2)
           => m1.Value < m2.Value;
 
         #endregion Operators
 
         public override bool Equals(object obj)
-            => Value == ((Meter)obj).Value;
+            => Value == ((Length)obj).Value;
 
         public override int GetHashCode()
             => Value.GetHashCode();

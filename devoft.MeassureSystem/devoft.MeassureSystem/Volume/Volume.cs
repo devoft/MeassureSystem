@@ -1,17 +1,15 @@
-﻿using devoft.MeassureSystem.Length;
-using devoft.MeassureSystem.Surface;
-using devoft.System.Collections.Generic;
+﻿using devoft.System.Collections.Generic;
 using System;
 using System.Text.RegularExpressions;
 
-namespace devoft.MeassureSystem.Volume
+namespace devoft.MeassureSystem
 {
 
-    public struct Meter3
+    public struct Volume
     {
         public static Regex m2Reg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(mm3|cm3|dm3|m3|dam3|hm3|km3|ml|l)$");
 
-        public decimal Value { get; }
+        internal decimal Value { get; }
         public string OriginalUnit { get; private set; }
 
         #region Unit properties
@@ -59,7 +57,7 @@ namespace devoft.MeassureSystem.Volume
         /// Constructor
         /// </summary>
         /// <param name="value">Value</param>
-        public Meter3(decimal value)
+        public Volume(decimal value)
         {
             Value = value;
             OriginalUnit = "m3";
@@ -70,7 +68,7 @@ namespace devoft.MeassureSystem.Volume
         /// </summary>
         /// <param name="value">Value</param>
         /// <param name="unit">Original unit of measure</param>
-        public Meter3(decimal value, string unit)
+        public Volume(decimal value, string unit)
         {
             if (unit?.In("mm3", "cm3", "dm3", "m3", "dam3", "hm3", "km3", "ml", "l") != true)
                 throw new ArgumentException($"unit mut be a valid cubit meter unit");
@@ -108,28 +106,28 @@ namespace devoft.MeassureSystem.Volume
             return $"{v:0.####################}{OriginalUnit}";
         }
 
-        public Meter3 cm3()  => new Meter3(Value) { OriginalUnit = "cm3" };
-        public Meter3 dm3()  => new Meter3(Value) { OriginalUnit = "dm3" };
-        public Meter3 mm3()  => new Meter3(Value) { OriginalUnit = "mm3" };
-        public Meter3 m3()   => new Meter3(Value) { OriginalUnit = "m3" };
-        public Meter3 dam3() => new Meter3(Value) { OriginalUnit = "dam3" };
-        public Meter3 hm3()  => new Meter3(Value) { OriginalUnit = "hm3" };
-        public Meter3 km3()  => new Meter3(Value) { OriginalUnit = "km3" };
-        public Meter3 ml()   => new Meter3(Value) { OriginalUnit = "ml" };
-        public Meter3 l()    => new Meter3(Value) { OriginalUnit = "l" };
+        public Volume cm3()  => new Volume(Value) { OriginalUnit = "cm3" };
+        public Volume dm3()  => new Volume(Value) { OriginalUnit = "dm3" };
+        public Volume mm3()  => new Volume(Value) { OriginalUnit = "mm3" };
+        public Volume m3()   => new Volume(Value) { OriginalUnit = "m3" };
+        public Volume dam3() => new Volume(Value) { OriginalUnit = "dam3" };
+        public Volume hm3()  => new Volume(Value) { OriginalUnit = "hm3" };
+        public Volume km3()  => new Volume(Value) { OriginalUnit = "km3" };
+        public Volume ml()   => new Volume(Value) { OriginalUnit = "ml" };
+        public Volume l()    => new Volume(Value) { OriginalUnit = "l" };
 
         #region Operators
 
-        public static implicit operator Meter3(decimal d)
-            => new Meter3(d);
+        public static implicit operator Volume(decimal d)
+            => new Volume(d);
 
-        public static explicit operator decimal(Meter3 m)
+        public static explicit operator decimal(Volume m)
             => m.Value;
 
-        public static explicit operator Meter3(string s)
+        public static explicit operator Volume(string s)
             => Parse(s);
 
-        public static Meter3 Parse(string s)
+        public static Volume Parse(string s)
         {
             if (TryParse(s, out var m))
                 return m.Value;
@@ -137,55 +135,55 @@ namespace devoft.MeassureSystem.Volume
                 throw new FormatException($"Invalid format");
         }
 
-        public static bool TryParse(string s, out Meter3? m)
+        public static bool TryParse(string s, out Volume? m)
         {
             if (m2Reg.Match(s)?.Groups is GroupCollection gc && gc.Count > 2)
             {
-                m = new Meter3(decimal.Parse(gc[1].Value), gc[2].Value);
+                m = new Volume(decimal.Parse(gc[1].Value), gc[2].Value);
                 return true;
             }
             m = null;
             return false;
         }
 
-        public static Meter3 operator +(Meter3 m1, Meter3 m2)
-           => new Meter3(m1.Value + m2.Value);
+        public static Volume operator +(Volume m1, Volume m2)
+           => new Volume(m1.Value + m2.Value);
 
-        public static Meter3 operator -(Meter3 m1, Meter3 m2)
-            => new Meter3(m1.Value - m2.Value);
+        public static Volume operator -(Volume m1, Volume m2)
+            => new Volume(m1.Value - m2.Value);
 
-        public static Meter3 operator *(decimal d, Meter3 m)
-          => new Meter3(m.Value * d);
-        public static Meter3 operator *(Meter3 m, decimal d)
-          => new Meter3(m.Value * d);
+        public static Volume operator *(decimal d, Volume m)
+          => new Volume(m.Value * d);
+        public static Volume operator *(Volume m, decimal d)
+          => new Volume(m.Value * d);
 
-        public static decimal operator /(Meter3 m1, Meter3 m2)
+        public static decimal operator /(Volume m1, Volume m2)
           => m1.Value / m2.Value;
-        public static Meter3 operator /(Meter3 m, decimal d)
-          => new Meter3(m.Value / d);
-        public static Meter2 operator /(Meter3 m2, Meter m)
-            => new Meter2(m2.Value / m.Value);
+        public static Volume operator /(Volume m, decimal d)
+          => new Volume(m.Value / d);
+        public static Area operator /(Volume m2, Length m)
+            => new Area(m2.Value / m.Value);
 
-        public static Meter operator /(Meter3 m2, Meter2 m)
-            => new Meter(m2.Value / m.Value);
+        public static Length operator /(Volume m2, Area m)
+            => new Length(m2.Value / m.Value);
 
 
-        public static bool operator ==(Meter3 m1, Meter3 m2)
+        public static bool operator ==(Volume m1, Volume m2)
           => m1.Value == m2.Value;
 
-        public static bool operator !=(Meter3 m1, Meter3 m2)
+        public static bool operator !=(Volume m1, Volume m2)
           => m1.Value != m2.Value;
 
-        public static bool operator >(Meter3 m1, Meter3 m2)
+        public static bool operator >(Volume m1, Volume m2)
           => m1.Value > m2.Value;
 
-        public static bool operator <(Meter3 m1, Meter3 m2)
+        public static bool operator <(Volume m1, Volume m2)
           => m1.Value > m2.Value;
 
         #endregion Operators
 
         public override bool Equals(object obj)
-            => Value == ((Meter3)obj).Value;
+            => Value == ((Volume)obj).Value;
 
         public override int GetHashCode()
             => Value.GetHashCode();
