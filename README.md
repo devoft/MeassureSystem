@@ -31,9 +31,9 @@ bool b = 5.lb() > 4.5m.kg();
 ```
 ### Time
 ```CSharp
-Milliseconds s = 2.h();                                  // 2h
+Time s = 2.h();                                  // 2h
 TimeSpan tm = 3.min();                                   // 00:03:00
-Milliseconds s = (Milliseconds) TimeSpan.FromHours(1);   // 3600s
+Time s = (Time) TimeSpan.FromHours(1);   // 3600s
 TimeSpan s = 2.h() + 20.min() + 90.s();                  // 02:21:30
 var (h, min, s, m) = 200.s();                            // (0,3,20,0)
 ```
