@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace devoft.MeassureSystem
 {
+
     public struct Area
     {
         public static Regex m2Reg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(mm2|cm2|dm2|m2|dam2|hm2|km2)$");

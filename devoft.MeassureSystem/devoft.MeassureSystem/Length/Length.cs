@@ -5,6 +5,10 @@ using System.Text.RegularExpressions;
 
 namespace devoft.MeassureSystem
 {
+    /// <summary>
+    /// Represents meassure unit values like cm, yd, inches, etc.
+    /// </summary>
+    /// <seealso cref="Pixel"/>
     [TypeConverter(typeof(LengthConverter))]
     public struct Length : IComparable<Length>, IEquatable<Length>
     {
@@ -68,10 +72,13 @@ namespace devoft.MeassureSystem
         }
 
         /// <summary>
-        /// Constructor
+        /// Creates a new <b>Length</b> with the indicated <paramref name="value"/> and 
+        /// <paramref name="unit"/>
         /// </summary>
         /// <param name="value">Value</param>
         /// <param name="unit">Original unit of measure</param>
+        /// <exception cref="ArgumentException">This is thrown when <paramref name="unit"/> is not
+        /// one of ["mm", "cm", "dm", "m", "dam", "hm", "km", "yd", "in","ft"] </exception>
         public Length(decimal value, string unit)
         {
             if (unit?.In("mm", "cm", "dm", "m", "dam", "hm", "km", "yd", "in","ft") != true)

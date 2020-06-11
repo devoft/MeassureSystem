@@ -1,10 +1,12 @@
 ﻿using devoft.MeassureSystem;
 using System;
+using System.ComponentModel;
 using System.Text.RegularExpressions;
 
 namespace devoft.MeassureSystem
 {
-    public struct Pixel
+    [TypeConverter(typeof(PixelConverter)) ]
+    public struct Pixel : IComparable<Pixel>, IEquatable<Pixel>
     {
         public static Regex mReg = new Regex(@"([0-9]+)(?:\s)*(px)$");
         public int Value { get; }
@@ -87,12 +89,18 @@ namespace devoft.MeassureSystem
         public static bool operator <(Pixel p1, Pixel p2)
             => p1.Value > p2.Value;
 
-        #endregion Operators
-
         public override bool Equals(object obj)
-            => Value == ((Pixel)obj).Value;
+            => Equals((Pixel)obj);
 
         public override int GetHashCode()
             => Value.GetHashCode();
+
+        public int CompareTo(Pixel other)
+            => Math.Sign(Px - other.Px);
+
+        public bool Equals(Pixel other)
+            => Value == other.Value;
+
+        #endregion Operators
     }
 }

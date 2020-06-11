@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace devoft.MeassureSystem
 {
-    internal class LengthConverter : TypeConverter
+    public class LengthConverter : TypeConverter
     {
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) 
             => destinationType.Name.In("String", "Decimal", "int", "Double");
@@ -18,19 +18,19 @@ namespace devoft.MeassureSystem
                {
                    "String"  => value.ToString(),
                    "Decimal" => (decimal) (Length) value,
-                   "int"     => Convert.ToInt32((decimal) (Length)value),
-                   "Double"  => Convert.ToDouble((decimal) (Length)value),
+                   "Int32"   => Convert.ToInt32((decimal)(Length)value),
+                   "Double"  => Convert.ToDouble((decimal)(Length)value),
                    _         => throw new NotSupportedException()
                };
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value) 
-            => value.GetType().Name switch
+            => value switch
             {
-                "String"    => Length.Parse((string)value),
-                "Decimal"   => new Length(Convert.ToDecimal(value)),
-                "int"       => new Length(Convert.ToDecimal(value)),
-                "Double"    => new Length(Convert.ToDecimal(value)),
-                _           => throw new NotSupportedException()
+                string str   => Length.Parse(str),
+                decimal dec  => new Length(dec),
+                int i        => new Length(i),
+                double d     => new Length(Convert.ToDecimal(d)),
+                _            => throw new NotSupportedException()
             }; 
     }
 }
