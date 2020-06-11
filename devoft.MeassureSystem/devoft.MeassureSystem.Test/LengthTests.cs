@@ -11,6 +11,7 @@ namespace devoft.MeassureSystem.Test
         {
             Length m = new Length(6);
             Assert.AreEqual(6, m.Meter);
+
         }
 
         [TestMethod]

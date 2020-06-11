@@ -1,10 +1,12 @@
 ﻿using devoft.System.Collections.Generic;
 using System;
+using System.ComponentModel;
 using System.Text.RegularExpressions;
 
 namespace devoft.MeassureSystem
 {
-    public struct Length
+    [TypeConverter(typeof(LengthConverter))]
+    public struct Length : IComparable<Length>, IEquatable<Length>
     {
         public static Regex mReg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(mm|cm|dm|m|dam|hm|km|yd|in|ft)$");
         internal decimal Value { get; }
@@ -123,7 +125,6 @@ namespace devoft.MeassureSystem
                                   "ft"      => 3.28084m,
                                   _         => 0m
                               };
-            
             return $"{val:0.####################}{OriginalUnit}";
         }
 
@@ -142,7 +143,7 @@ namespace devoft.MeassureSystem
                 "ft"    => $"{Feet.ToString(format)}ft",
                 _       => null
             };
-        
+
         public Length mm()      => new Length(Value) { OriginalUnit = "mm" };
         public Length cm()      => new Length(Value) { OriginalUnit = "cm" };
         public Length dm()      => new Length(Value) { OriginalUnit = "dm" };
@@ -192,9 +193,15 @@ namespace devoft.MeassureSystem
         #endregion Operators
 
         public override bool Equals(object obj)
-            => Value == ((Length)obj).Value;
+            => Equals((Length)obj);
 
         public override int GetHashCode()
             => Value.GetHashCode();
+
+        public int CompareTo(Length other)
+            => Math.Sign(Meter - other.Meter);
+
+        public bool Equals(Length other)
+            => Value == other.Value;
     }
 }
