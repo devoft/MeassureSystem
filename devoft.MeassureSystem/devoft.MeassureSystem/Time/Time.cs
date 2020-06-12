@@ -1,17 +1,28 @@
 ﻿using devoft.System.Collections.Generic;
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace devoft.MeassureSystem
 {
-    public struct Time
+    /// <summary>
+    /// Representation of Time <br/>
+    /// e.g. Time time = 2.d() + 12.h() + 90.s();
+    /// </summary>
+    /// <example>
+    /// <code>Time time = 4.min();</code>
+    /// <code>var (d,h,m,s,ms) = 2.d() + 12.h() + 90.s();</code>
+    /// </example>
+    /// <seealso cref="TimeSpan"/>
+    [TypeConverter(typeof(TimeConverter))]
+    public struct Time : IComparable<Time>, IComparable, IEquatable<Time>, IFormattable
     {
         static readonly Regex gReg = new Regex(@"((([0-9]+)(?:\s)*d)\:?)?((([0-9]+)(?:\s)*h)\:?)?((([0-9]+)(?:\s)*min)\:?)?((([0-9]+)(?:\s)*s)\:?)?((([0-9]+)(?:\s)*ms)\:?)?$");
         static readonly Regex partialReg = new Regex(@"([0-9]+)(?:\s)*(s|min|h|ms|d)$");
 
         /// <summary>
-        /// The amount of Time corresponding with this time. 
+        /// The amount of Milliseconds corresponding with this time. 
         /// This property is always in milliseconds, even if the object was created with another unit.
         /// Eg. new Time(2, "s").Value == 2000
         /// </summary>
@@ -54,6 +65,15 @@ namespace devoft.MeassureSystem
                 "d"     => 24 * 3_600_000,
                 _       => 0
             };
+        }
+
+        /// <summary>
+        /// Creates a new Time from TimeSpan <paramref name="timeSpan"/>.
+        /// </summary>
+        /// <param name="timeSpan">The timespan to create a Time from</param>
+        public Time(TimeSpan timeSpan) 
+            : this(Convert.ToInt32(timeSpan.TotalMilliseconds))
+        {
         }
 
         /// <summary>
@@ -262,7 +282,7 @@ namespace devoft.MeassureSystem
         }
 
         public override bool Equals(object obj)
-            => ((Time)obj).Value == Value;
+            => Equals((Time)obj);
 
         public override int GetHashCode()
             => Value.GetHashCode();
@@ -276,7 +296,7 @@ namespace devoft.MeassureSystem
         public override string ToString()
             => OriginalUnit switch
             {
-                "s"   => $"{Value}s",
+                "s"   => $"{Seconds}s",
                 "h"   => $"{Hours}h",
                 "min" => $"{Minutes}min",
                 "ms"  => $"{Milliseconds}ms",
@@ -293,6 +313,9 @@ namespace devoft.MeassureSystem
         public string ToString(string format)
             => ((TimeSpan)this).ToString(format);
 
+        public string ToString(string format, IFormatProvider formatProvider)
+            => ((TimeSpan)this).ToString(format, formatProvider);
+
         /// <summary>
         /// Deconstructs the object back to tuple: 
         /// (<paramref name="day"/>, <paramref name="hour"/>, <paramref name="minutes"/>, <paramref name="seconds"/>, <paramref name="milliseconds"/>)
@@ -307,5 +330,18 @@ namespace devoft.MeassureSystem
             TimeSpan ts = this;
             (day, hour, minutes, seconds, milliseconds) = (ts.Days, ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds);
         }
+
+        /// <inheritdoc cref="IComparable{T}"/>
+        public int CompareTo(Time other)
+            => Math.Sign(Value - other.Value);
+
+        /// <inheritdoc cref="IComparable"/>
+        public int CompareTo(object obj)
+            => this.CompareTo((Time)obj);
+
+        /// <inheritdoc cref="IEquatable{T}"/>
+        public bool Equals(Time other)
+            => other.Value == Value;
+
     }
 }

@@ -56,6 +56,8 @@ namespace devoft.MeassureSystem.Test
             Assert.AreEqual(1000.l(), 1.m() * 1.m() * 1.m());
             Assert.AreEqual(0.000001m, 1.cm() * 1.cm() * 1.cm());
 
+            Assert.IsTrue((Pixel) 200 > 2.inch());
+
         }
     }
 }

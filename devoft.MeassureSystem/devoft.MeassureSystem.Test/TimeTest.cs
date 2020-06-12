@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace devoft.MeassureSystem.Test
 {
@@ -31,5 +32,23 @@ namespace devoft.MeassureSystem.Test
             Assert.ThrowsException<FormatException>(() => Time.Parse("3d:30s:2s"));
             Assert.ThrowsException<FormatException>(() => Time.Parse(""));
         }
+
+        [TestMethod]
+        public void SortUsingComparable()
+        {
+            var jobs = new[]
+            {
+                new Job { Duration = 3.min() },
+                new Job { Duration = 3.h() },
+                new Job { Duration = 3.s() }
+            };
+            var sorted = string.Join(',', jobs.OrderBy(x => x.Duration).Select(x => x.Duration.ToString()));
+            
+            Assert.AreEqual("3s,3min,3h", sorted);
+        }
+
+        public class Job { public Time Duration { get; set; } }
     }
+
+
 }
