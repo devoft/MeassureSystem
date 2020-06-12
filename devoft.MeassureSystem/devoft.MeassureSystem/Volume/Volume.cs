@@ -1,11 +1,16 @@
 ﻿using devoft.System.Collections.Generic;
 using System;
+using System.ComponentModel;
 using System.Text.RegularExpressions;
 
 namespace devoft.MeassureSystem
 {
 
-    public struct Volume
+    /// <summary>
+    /// Represents meassure unit values like cubic centimeter, cubic meter, cubic kilometer, etc.
+    /// </summary>
+    [TypeConverter (typeof(VolumeConverter))]
+    public struct Volume : IComparable<Volume>, IEquatable<Volume>
     {
         public static Regex m2Reg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(mm3|cm3|dm3|m3|dam3|hm3|km3|ml|l)$");
 
@@ -148,41 +153,36 @@ namespace devoft.MeassureSystem
 
         public static Volume operator -(Volume v1, Volume v2)
             => new Volume(v1.Value - v2.Value);
-
         public static Volume operator *(decimal d, Volume v)
-          => new Volume(v.Value * d);
+            => new Volume(v.Value * d);
         public static Volume operator *(Volume v, decimal d)
-          => new Volume(v.Value * d);
-
+            => new Volume(v.Value * d);
         public static decimal operator /(Volume v1, Volume v2)
-          => v1.Value / v2.Value;
+            => v1.Value / v2.Value;
         public static Volume operator /(Volume v, decimal d)
-          => new Volume(v.Value / d);
+            => new Volume(v.Value / d);
         public static Area operator /(Volume v2, Length l)
             => new Area(v2.Value / l.Value);
-
         public static Length operator /(Volume v2, Area area)
             => new Length(v2.Value / area.Value);
-
-
         public static bool operator ==(Volume v1, Volume v2)
-          => v1.Value == v2.Value;
-
+            => v1.Value == v2.Value;
         public static bool operator !=(Volume v1, Volume v2)
-          => v1.Value != v2.Value;
-
+            => v1.Value != v2.Value;
         public static bool operator >(Volume v1, Volume v2)
-          => v1.Value > v2.Value;
-
+            => v1.Value > v2.Value;
         public static bool operator <(Volume v1, Volume v2)
-          => v1.Value > v2.Value;
+            => v1.Value > v2.Value;
 
         #endregion Operators
 
         public override bool Equals(object obj)
-            => Value == ((Volume)obj).Value;
-
+            => Equals((Volume)obj);
         public override int GetHashCode()
             => Value.GetHashCode();
+        public int CompareTo(Volume other) 
+            => Math.Sign(Meter3 - other.Value);
+        public bool Equals(Volume other) 
+            => Value == other.Value;
     }
 }

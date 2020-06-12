@@ -201,13 +201,10 @@ namespace devoft.MeassureSystem
 
         public override bool Equals(object obj)
             => Equals((Length)obj);
-
         public override int GetHashCode()
             => Value.GetHashCode();
-
         public int CompareTo(Length other)
             => Math.Sign(Meter - other.Meter);
-
         public bool Equals(Length other)
             => Value == other.Value;
     }

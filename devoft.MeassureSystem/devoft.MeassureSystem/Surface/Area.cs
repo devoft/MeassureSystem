@@ -6,10 +6,10 @@ using System.Text.RegularExpressions;
 namespace devoft.MeassureSystem
 {
     /// <summary>
-    /// Represents meassure unit values like square cm, square meter, square km, etc.
+    /// Represents meassure unit values like square centimeter, square meter, square kilometer, etc.
     /// </summary>
     /// <seealso cref="Length"/>
-    [TypeConverter (typeof(AreaConverter))]
+    [TypeConverter(typeof(AreaConverter))]
     public struct Area : IComparable<Area>, IEquatable<Area>
     {
         public static Regex m2Reg = new Regex(@"([0-9]+(?:[.|,][0-9]+)?)(?:\s)*(mm2|cm2|dm2|m2|dam2|hm2|km2)$");
@@ -168,12 +168,8 @@ namespace devoft.MeassureSystem
             => Equals((Area)obj);
         public override int GetHashCode()
             => Value.GetHashCode();
-
-        public int CompareTo(Area other)
-        {
-            return Math.Sign(Value - other.Value);
-        }
-
+        public int CompareTo(Area other) 
+            => Math.Sign(Value - other.Value);
         public bool Equals(Area other) 
             => Value == other.Value;
     }
