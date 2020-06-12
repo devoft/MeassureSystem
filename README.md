@@ -72,7 +72,7 @@ Then `OrderBy` can be used with **`Time`** properties like `Duration`:
 ```CSharp
 var sortedJobs = jobs.OrderBy(j => j.Duration);
 ```
-
+> It is not available on EntityFramework(Core) or LinqToSql queries yet
 
 # Contributions
 This project exists thanks to all the people who contribute:
