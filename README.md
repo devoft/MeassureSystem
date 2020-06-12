@@ -9,6 +9,9 @@ Easy to use Meassures on C# code as it can be seen in the next sections:
 - [General features](https://github.com/devoft/MeassureSystem#general-features)
   - [ToString](https://github.com/devoft/MeassureSystem#ToString)
   - [Parsing](https://github.com/devoft/MeassureSystem#Parse)
+  - [IComparable](https://github.com/devoft/MeassureSystem#IComparable)
+  
+If you want to know more about this and other projects visit us at [devoft](http://www.devoft.com)
   
 ## Units
 ### Length
