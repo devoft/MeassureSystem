@@ -26,7 +26,7 @@ Volume lt = 5.cm() * 2.m() * 7.dm();          //0.07m3
 ```
 ### Weight
 ```CSharp
-Gram g = 5.lb();                              
+Weight g = 5.lb();                              
 bool b = 5.lb() > 4.5m.kg();                  
 ```
 ### Time
@@ -53,5 +53,8 @@ Length l2 = (Length)"20cm";                     // 20cm
 var l3 = 2.km() + (Length) "20m";               // 2020m
 ```
 
-# Contribute
-Help us create more meassure units and relationships among them by extensively use of fancy C# language features.
+# Contributions
+This project exists thanks to all the people who contribute:
+[mariodvm](https://github.com/mariodvm), [johnnamdez](https://github.com/johnnamdez)
+
+If you want to learn more about this and other projects visit us at [devoft](http://www.devoft.com)
