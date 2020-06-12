@@ -165,6 +165,8 @@ namespace devoft.MeassureSystem
             => new Area(v2.Value / l.Value);
         public static Length operator /(Volume v2, Area area)
             => new Length(v2.Value / area.Value);
+        public static Volume operator -(Volume v)
+           => new Volume(-v.Meter3) { OriginalUnit = v.OriginalUnit };
         public static bool operator ==(Volume v1, Volume v2)
             => v1.Value == v2.Value;
         public static bool operator !=(Volume v1, Volume v2)
