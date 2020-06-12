@@ -8,10 +8,10 @@ namespace devoft.MeassureSystem
     public class LengthConverter : TypeConverter
     {
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) 
-            => destinationType.Name.In("String", "Decimal", "int", "Double");
+            => destinationType.Name.In("String", "Decimal", "Int32", "Double");
 
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType) 
-            => sourceType.Name.In("String", "Decimal", "int", "Double");
+            => sourceType.Name.In("String", "Decimal", "Int32", "Double");
 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
             => destinationType.Name switch 
