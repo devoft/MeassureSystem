@@ -296,7 +296,7 @@ namespace devoft.MeassureSystem
         public override string ToString()
             => OriginalUnit switch
             {
-                "s"   => $"{Value}s",
+                "s"   => $"{Seconds}s",
                 "h"   => $"{Hours}h",
                 "min" => $"{Minutes}min",
                 "ms"  => $"{Milliseconds}ms",

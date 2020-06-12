@@ -19,7 +19,7 @@ namespace devoft.MeassureSystem
                    "String"     => ((Time) value).ToString(),
                    "TimeSpan"   => (TimeSpan) (Time) value,
                    "Int32"      => ((Time) value).Value,
-                   _            => throw new NotSupportedException();
+                   _            => throw new NotSupportedException()
                };
 
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
