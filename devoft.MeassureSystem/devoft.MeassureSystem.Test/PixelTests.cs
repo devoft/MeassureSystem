@@ -26,6 +26,12 @@ namespace devoft.MeassureSystem.Test
         {
             Pixel p = 1.inch();
             Assert.AreEqual(96, p.Value);
+
+            double width = (Pixel) 2.inch();
+            Assert.AreEqual(192, width);
+
+            p = 96.px() + 10 * 2.inch();
+            Assert.AreEqual(p, 21.inch());
         }
 
         [TestMethod]

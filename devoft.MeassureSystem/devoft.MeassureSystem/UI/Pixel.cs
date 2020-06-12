@@ -15,10 +15,11 @@ namespace devoft.MeassureSystem
         /// Value in pixel
         /// </summary>
         public int Px => Value;
+
         /// <summary>
         /// Value in millimeter
         /// </summary>
-        public decimal Mm => (Value * 3.779528m);
+        public decimal Inches => (Value / 96m);
 
         #endregion
 
@@ -35,8 +36,6 @@ namespace devoft.MeassureSystem
         #region Operators
 
         public static implicit operator Pixel(int d) => new Pixel(d);
-
-        public static explicit operator int(Pixel m) => m.Value;
 
         public static explicit operator Pixel(string s) => Parse(s);
 
@@ -55,6 +54,9 @@ namespace devoft.MeassureSystem
             m = null;
             return false;
         }
+
+        public static implicit operator int(Pixel p)
+            => p.Value;
 
         public static implicit operator Pixel(Length m)
             => new Pixel(Convert.ToInt32(m.Inch * 96));
