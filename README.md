@@ -9,6 +9,9 @@ Easy to use Meassures on C# code as it can be seen in the next sections:
 - [General features](https://github.com/devoft/MeassureSystem#general-features)
   - [ToString](https://github.com/devoft/MeassureSystem#ToString)
   - [Parsing](https://github.com/devoft/MeassureSystem#Parse)
+  - [IComparable](https://github.com/devoft/MeassureSystem#IComparable)
+  
+If you want to know more about this and other projects visit us at [devoft](http://www.devoft.com)
   
 ## Units
 ### Length
@@ -52,6 +55,24 @@ Length l1 = Length.Parse("3cm");                // 3cm
 Length l2 = (Length)"20cm";                     // 20cm
 var l3 = 2.km() + (Length) "20m";               // 2020m
 ```
+### IComparable
+If such a class `Job` is defines as follows:
+```CSharp
+class Job { public Time Duration { get; set; }}
+```
+and having a list of jobs:
+```CSharp
+var jobs = new [] { 
+  new Job { Duration = 3.min() }, 
+  new Job { Duration = 3.d() }, 
+  new Job { Duration = 3.h() } 
+}
+```
+Then `OrderBy` can be used with **`Time`** properties like `Duration`:
+```CSharp
+var sortedJobs = jobs.OrderBy(j => j.Duration);
+```
+> It is not available on EntityFramework(Core) or LinqToSql queries yet
 
 # Contributions
 This project exists thanks to all the people who contribute:
