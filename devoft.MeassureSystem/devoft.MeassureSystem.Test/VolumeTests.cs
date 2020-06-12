@@ -1,4 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace devoft.MeassureSystem.Test
 {
@@ -58,6 +60,23 @@ namespace devoft.MeassureSystem.Test
 
             Assert.IsTrue((Pixel) 200 > 2.inch());
 
+        }
+
+        [TestMethod]
+        public void TestComparison()
+        {
+            var winesBarrels = new List<WinesBarrel> { new WinesBarrel { Capacity = 9.m3() },
+                                                       new WinesBarrel { Capacity = 800.l() },
+                                                       new WinesBarrel { Capacity = 50000.mm3() }
+                                                    
+                                                     };
+            Assert.AreEqual("9m3,800l,50000mm3", string.Join(',', winesBarrels.OrderByDescending(wb => wb.Capacity)
+                                                                              .Select(wb => wb.Capacity)));
+        }
+
+        public class WinesBarrel
+        {
+            public Volume Capacity { get; set; }
         }
     }
 }

@@ -1,4 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace devoft.MeassureSystem.Test
 {
@@ -61,8 +63,8 @@ namespace devoft.MeassureSystem.Test
         [TestMethod]
         public void TestOperators()
         {
-            Length m = 8;
-            Assert.AreEqual(8m , m);
+            Length l = 8;
+            Assert.AreEqual(8m , l);
             Assert.AreEqual(55m, 500.cm() + 500.dm());
             Assert.AreEqual(0.05m, 5.cm());
             Assert.AreEqual(0.502m, 2.mm() + 5.dm());
@@ -82,6 +84,21 @@ namespace devoft.MeassureSystem.Test
             Assert.AreEqual(0.42m, 6 * 7.cm());
             Assert.AreEqual(10m, 40.cm() / 4.cm());
             Assert.AreEqual(0.05m, 50.cm() / 10);
+        }
+
+        [TestMethod]
+        public void TestComparison()
+        {
+            var pipes = new List<Pipe> { new Pipe { Diameter = 2.m() }, 
+                                         new Pipe { Diameter = 30.mm() }, 
+                                         new Pipe { Diameter = 10.cm() }
+                                       };
+            Assert.AreEqual("30mm,10cm,2m", string.Join(',', pipes.OrderBy(p => p.Diameter).Select(p => p.Diameter)));
+        }
+
+        public class Pipe
+        {
+            public Length Diameter { get; set; }
         }
     }
 }

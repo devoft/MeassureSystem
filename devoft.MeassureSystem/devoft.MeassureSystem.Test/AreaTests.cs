@@ -1,4 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace devoft.MeassureSystem.Test
 {
@@ -66,6 +68,24 @@ namespace devoft.MeassureSystem.Test
             Assert.AreEqual(20.hm2(), 80m.hm2() / 4);
             Assert.AreEqual(10, 40m.m2() / 4);
             Assert.AreEqual(25000000.m2(), 1m.km2() / 4m.dm2());
+        }
+
+        [TestMethod]
+        public void TestComparison()
+        {
+            var lp = new List<LivingPlace> { new LivingPlace { ConstArea = 4.m2() } ,
+                                                new LivingPlace { ConstArea = 300.mm2() },
+                                                new LivingPlace { ConstArea = 1000.cm2() }
+                                              };
+
+            Assert.AreEqual("4m2,1000cm2,300mm2", string.Join(',', lp.OrderByDescending(x => x.ConstArea)
+                                                                        .Select(x => x.ConstArea)));
+        }
+
+        public class LivingPlace
+        {
+            public Area ConstArea { get; set; } 
+
         }
     }
 }
