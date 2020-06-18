@@ -10,6 +10,7 @@ Easy to use Meassures on C# code as it can be seen in the next sections:
   - [ToString](https://github.com/devoft/MeassureSystem#ToString)
   - [Parsing](https://github.com/devoft/MeassureSystem#Parse)
   - [IComparable](https://github.com/devoft/MeassureSystem#IComparable)
+  - [Linq query expressions](https://github.com/devoft/MeassureSystem#Linq-query-expressions) _**NEW!**_
   
 If you want to know more about this and other projects visit us at [devoft](http://www.devoft.com)
   
