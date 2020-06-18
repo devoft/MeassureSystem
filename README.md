@@ -111,7 +111,7 @@ As long as EntityFramework(Core) and other ORMs do not support mappings to User 
   ```CSharp 
   myContext.Jobs.Where(job => job.Duration > (TimeSpan) 5.min())
   ``` 
-  **Solution 2** Consider implicit conversions to non-unit types. In this case `Time` can be plicitly converted to `TimeSpan`, so the cast is not needed:
+  **Solution 2** Consider implicit conversions to non-unit types. In this case `Time` can be implicitly converted to `TimeSpan`, so the cast is not needed:
   ```CSharp 
   myContext.Jobs.Where(job => job.Duration > 5.min())
   ``` 
