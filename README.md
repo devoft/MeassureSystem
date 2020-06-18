@@ -92,12 +92,13 @@ var sortedJobs = jobs.OrderBy(j => j.Duration);
 ### Linq query expressions
 Units expressions can be used as part of query expressions even with EntityFramework and LinkToSql as in the following example:
 ```CSharp
-var job = from job in myContext.Jobs
+var job = from job in myContext.Jobs.AllowUnits()
           where job.Duration > 2.min() // Duration is of type TimeSpan
           select job;
 ```
 #### Known issue
 As long as EntityFramework(Core) and other ORMs do not support mappings to User Defined Types (UDT on Sql Servers), unit types cannot be used as type of properties in entity definitions. Despite that, it's still possible to use Units in queries meeting the following requirements:
+- Units will be available for ORM queries after applying `AllowUnits()` extension methods.
 - Units cannot be used as type of entity properties. 
 
   **Solution** We recomend to define property of entities of the following types:
