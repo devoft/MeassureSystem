@@ -87,9 +87,9 @@ As long as EntityFramework(Core) and other ORMs do not support mappings to User 
 
   **Solution** We recomend to define property of entities of the following types:
   - `TimeSpan` where you would want `Time`.
-  - `Decimal` where you would want `Length`, assuming that values are in metters.
-  - `Decimal` where you would want `Area`, assuming that values are in squared metters.
-  - `Decimal` where you would want `Volume`, assuming that values are in cubic metters.
+  - `Decimal` where you would want `Length`, assuming that values are in meters.
+  - `Decimal` where you would want `Area`, assuming that values are in squared meters.
+  - `Decimal` where you would want `Volume`, assuming that values are in cubic meters.
   - `Decimal` where you would want `Weight`, assuming that values are in grams.
   - `Int32` where you would want `Pixel`.
 - Clausured variables and unit types may not appear in the same expression. However, convertions to non-unit types can solve the issue in many cases:
