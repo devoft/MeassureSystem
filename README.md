@@ -72,7 +72,49 @@ Then `OrderBy` can be used with **`Time`** properties like `Duration`:
 ```CSharp
 var sortedJobs = jobs.OrderBy(j => j.Duration);
 ```
-> It is not available on EntityFramework(Core) or LinqToSql queries yet
+> It is not available on EntityFramework(Core) or LinqToSql queries yet, but...
+
+### Linq query expressions
+Units expressions can be used as part of query expressions even with EntityFramework and LinkToSql as in the following example:
+```CSharp
+var job = from job in myContext.Jobs
+          where job.Duration > 2.min() // Duration is of type TimeSpan
+          select job;
+```
+#### Known issue
+As long as EntityFramework(Core) and other ORMs do not support mappings to User Defined Types (UDT on Sql Servers), unit types cannot be used as type of properties in entity definitions. Despite that, it's still possible to use Units in queries meeting the following requirements:
+- Units cannot be used as type of entity properties. 
+
+  **Solution** We recomend to define property of entities of the following types:
+  - `TimeSpan` where you would want `Time`.
+  - `Decimal` where you would want `Length`, assuming that values are in metters.
+  - `Decimal` where you would want `Area`, assuming that values are in squared metters.
+  - `Decimal` where you would want `Volume`, assuming that values are in cubic metters.
+  - `Decimal` where you would want `Weight`, assuming that values are in grams.
+  - `Int32` where you would want `Pixel`.
+- Clausured variables and unit types may not appear in the same expression. However, convertions to non-unit types can solve the issue in many cases:
+  ##### Example 1 
+  In this example `job` is the clausure and `.min()` is of a unit type:
+  ```CSharp 
+  myContext.Jobs.Where(job => job.Time.min() > 5.min()) // Time is int
+  ``` 
+  **Solution** Convert unit expressions to non-unit types (`.Minutes`):
+  ```CSharp 
+  myContext.Jobs.Where(job => job.Time > 5.min().Minutes) // Time is int
+  ``` 
+  ##### Example 2
+  In this example the unit type appears in a Type Cast:
+  ```CSharp
+  myContext.Jobs.Where(job => (Time) job.Duration > 5.min()) // Duration is of pe TimeSpan
+  ```
+  **Solution 1** Cast to non-unit types instead:
+  ```CSharp 
+  myContext.Jobs.Where(job => job.Duration > (TimeSpan) 5.min())
+  ``` 
+  **Solution 2** Consider implicit conversions to non-unit types. In this case `Time` can be plicitly converted to `TimeSpan`, so the cast is not needed:
+  ```CSharp 
+  myContext.Jobs.Where(job => job.Duration > 5.min())
+  ``` 
 
 # Contributions
 This project exists thanks to all the people who contribute:
